@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('reject_reason')->nullable();
             $table->enum('status', ['pending', 'borrowed', 'returned', 'late', 'rejected'])->default('pending');
             $table->timestamps();
+            $table->softDeletes();
         });
     }       
 

@@ -18,6 +18,10 @@ class LoginController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+        ], [
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'password.required' => 'Password wajib diisi.',
         ]);
 
         if (!Auth::attempt($credentials)) {
@@ -31,11 +35,14 @@ class LoginController extends Controller
         $user = Auth::user();
 
         if ($user->hasRole('admin')) {
-            return redirect('/admin/dashboard');
+            return redirect()->route('admin.dashboard');
         } elseif ($user->hasRole('student')) {
-            return redirect('/student/dashboard');
+            return redirect()->route('student.dashboard');
         } else {
-            return redirect('/');
+            Auth::logout();
+            return redirect()->route('login')->withErrors([
+                'email' => 'Akun Anda tidak memiliki akses.',
+            ]);
         }
     }
 
@@ -44,6 +51,6 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login');
+        return redirect()->route('login');
     }
 }

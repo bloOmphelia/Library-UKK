@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
             $table->timestamps();
+            $table->softDeletes();
             $table->unique(['title', 'writer']);
         });
     }
