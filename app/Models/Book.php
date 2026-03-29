@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Traits\Filterable;
 
 class Book extends Model
 {
-    use HasFactory, Filterable;
+    use HasFactory, Filterable, SoftDeletes;
 
     protected $fillable = [
         'cover',
@@ -18,7 +19,10 @@ class Book extends Model
         'publisher',
         'description',
         'stock',
+        'year',
+        'language',
         'category_id',
+        'status',
     ];
 
     public function transaction ()
@@ -31,5 +35,10 @@ class Book extends Model
         return $this->belongsTo(Category::class)->withDefault([
             'name' => '-'
         ]);
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'published');
     }
 }

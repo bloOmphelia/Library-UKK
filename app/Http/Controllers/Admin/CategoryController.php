@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function index (Request $request)
     {
-        $categories = Category::filter($request->all(), ['name'])->latest()->paginate(10)->withQueryString();
+        $categories = Category::filter($request->only(['search']), ['name'])->latest()->paginate(10)->withQueryString();
         return view('admin.pages.category.index', compact('categories'));
     }
 
@@ -24,13 +24,18 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:categories,name',
+        ], [
+            'name.required' => 'Nama kategori wajib diisi.',
+            'name.string'   => 'Nama kategori harus berupa teks.',
+            'name.max'      => 'Nama kategori maksimal 255 karakter.',
+            'name.unique'   => 'Nama kategori ini sudah ada, gunakan nama lain.',
         ]);
 
         Category::create([
             'name' => $request->name,
         ]);
 
-        return redirect()->route('admin.category')->with('success', 'Kategori berhasil ditambahkan.');
+        return redirect()->back()->with('success', 'Kategori berhasil ditambahkan.');
     }
 
     public function edit($id)
@@ -42,7 +47,10 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'sometimes|string|max:255|unique:categories,name,'.$id,
+            'name' => 'required|string|max:255|unique:categories,name,'.$id,
+        ], [
+            'name.required' => 'Nama kategori tidak boleh kosong.',
+            'name.unique'   => 'Nama kategori sudah digunakan.',
         ]);
 
         $categories = Category::findOrFail($id);
@@ -56,6 +64,11 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $categories = Category::findOrFail($id);
+
+            if ($categories->books()->exists()) {
+            return redirect()->route('admin.category')->with('error', 'Kategori tidak dapat dihapus karena masih memiliki data buku terkait.');
+        }
+
         $categories->delete();
 
         return redirect()->route('admin.category')->with('success', 'Kategori berhasil dihapus.');
