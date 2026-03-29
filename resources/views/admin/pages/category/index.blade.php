@@ -1,65 +1,58 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Manage Category')
+@section('title', 'Kategori Buku')
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/admin/category/index.css') }}">
+@endpush
 
 @section('content')
-<div class="card position-relative overflow-hidden" style="background-color: #E8DEF3;">
-    <div class="card-body px-4 py-4">
-        <div class="row align-items-center">
-            <div class="col-9">
-                @include('components.breadcrumb', [
-                    'title' => 'Kategori',
-                    'description' => 'Daftar kategori buku'
-                ])
-            </div>
-            <div class="col-3 text-center mb-n1">
-                <img src="{{ asset('assets/users/admin/dist/images/backgrounds/track-bg.png') }}" 
-                     width="70px" alt="" class="img-fluid mb-n3" />
-            </div>
-        </div>
-    </div>
-</div>
+<x-breadcrumb 
+    title="Kelola Kategori Buku"
+    description="Atur kategori untuk klasifikasi buku"
+    category="Manajemen"
+    bgColor="#f2f0eb"
+    imgWidth="70px"
+/>
 
-<div class="p-3 mt-4">
+<div class="container-fluid p-4">
 
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mb-2">
-        
-        <div class="flex-grow-1" style="max-width: 800px;">
-            <x-search-filter :action="url()->current()" placeholder="Cari kategori..."></x-search-filter>
-        </div>
-
-        <div>
+    <x-search-filter :action="url()->current()" placeholder="Cari nama kategori...">
+        <div class="d-flex align-items-center justify-content-end w-100">
             <a href="{{ route('admin.category.create') }}" 
-               class="btn text-white d-flex align-items-center gap-2" style="background-color: #7209DB; padding: 10px 20px;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z" />
-                </svg>
-                <span>Tambah <span class="d-none d-sm-inline">Kategori</span></span>
+            class="btn btn-dark d-flex align-items-center justify-content-center gap-2 text-nowrap" 
+            style="height: 45px; padding: 0 20px; border-radius: 12px; font-size: 14px; font-weight: 700;">
+                <i class="bi bi-plus-lg" style="font-size: 18px;"></i>
+                Tambah Kategori
             </a>
         </div>
-    </div>
+    </x-search-filter>
 
-    <div class="table-responsive rounded-2 mb-4 mt-2">
-        <table class="table border text-nowrap customize-table mb-0 align-middle text-center">
+    <div class="table-responsive">
+        <table class="table customize-table mb-0 align-middle text-center">
             <thead>
                 <tr>
-                    <th class="fw-semibold text-white" style="background-color: #9425FE">No</th>
-                    <th class="fw-semibold text-white" style="background-color: #9425FE">Kategori</th>
-                    <th class="fw-semibold text-white" style="background-color: #9425FE">Aksi</th>
+                    <th width="10%">No</th>
+                    <th width="65%" class="text-start ps-5">Nama Kategori</th>
+                    <th width="25%">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="text-center">
+            <tbody>
                 @forelse ($categories as $index => $category)
                 <tr>
-                    <td>{{ $categories->firstItem() + $index }}</td>
-                    <td>{{ $category->name }}</td>
+                    <td class="fw-bold text-muted">{{ $categories->firstItem() + $index }}</td>
+                    <td class="text-start ps-5">
+                        <span class="fw-semibold" style="color: #1e1e1e;">{{ $category->name }}</span>
+                    </td>
                     <td>
                         <div class="d-flex justify-content-center gap-2">
                             <a href="{{ route('admin.category.edit', $category->id) }}" 
-                                class="btn action-btn p-2 d-flex align-items-center" 
-                                style="background-color: #FFB649; border-radius: 8px;">
-                                <svg width="18" height="18" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M17.4582 7.98781L14.178 4.70855L15.4907 3.39684C16.0751 2.81242 17.4137 2.69646 18.1141 3.39684L18.7699 4.05269C19.4703 4.75307 19.3553 6.09168 18.7699 6.67703L17.4582 7.98781ZM16.1465 9.30044L6.96272 18.4842L2.69922 19.4675L3.68253 15.204L12.8663 6.02025L16.1465 9.30044Z" fill="white" />
+                                class="btn btn-sm text-white" 
+                                style="background-color: #ad9a79; border-radius: 6px;"
+                                title="Edit Kategori">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M18.5 2.5C19.3284 1.67157 20.6716 1.67157 21.5 2.5C22.3284 3.32843 22.3284 4.67157 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </a>
 
@@ -67,22 +60,10 @@
                                   method="POST" class="d-inline m-0">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn action-btn p-2 d-flex align-items-center" 
-                                        style="background-color: #DB0909; border-radius: 8px;"
-                                        onclick="return confirm('Yakin ingin menghapus kategori ini?')">
-                                    <svg width="18" height="18" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g clip-path="url(#clip0_10766_43089)">
-                                            <path d="M3.71094 6.49219H18.5534" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M9.27734 10.2031V15.7691" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M12.9883 10.2031V15.7691" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M4.63672 6.49219L5.56437 17.6241C5.56437 18.1161 5.75984 18.588 6.10778 18.936C6.45572 19.2839 6.92763 19.4794 7.41968 19.4794H14.8409C15.333 19.4794 15.8049 19.2839 16.1528 18.936C16.5008 18.588 16.6962 18.1161 16.6962 17.6241L17.6239 6.49219" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M8.34766 6.49187V3.70891C8.34766 3.46288 8.44539 3.22692 8.61936 3.05295C8.79333 2.87898 9.02928 2.78125 9.27531 2.78125H12.9859C13.232 2.78125 13.4679 2.87898 13.6419 3.05295C13.8159 3.22692 13.9136 3.46288 13.9136 3.70891V6.49187" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </g>
-                                        <defs>
-                                            <clipPath id="clip0_10766_43089">
-                                                <rect width="22.2637" height="22.2637" rx="6" fill="white" />
-                                            </clipPath>
-                                        </defs>
+                                <button type="submit" class="btn btn-danger p-2 d-flex align-items-center shadow-sm swal-delete" >
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 6H5H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </button>
                             </form>
@@ -90,16 +71,17 @@
                     </td>
                 </tr>
                 @empty
-                <tr>
-                    <td colspan="3" class="text-center py-4">Belum ada kategori</td>
-                </tr>
+                <x-empty-state
+                    colspan="3" 
+                    description="Belum ada kategori yang ditambahkan."
+                />
                 @endforelse
             </tbody>
         </table>
     </div>
-    
-    <div class="mt-3">
-        {{ $categories->links() }}
+ 
+    <div class="mt-4">
+        <x-paginate :paginator="$categories" />
     </div>
 </div>
 @endsection
