@@ -1,0 +1,76 @@
+    #filterForm {
+    margin-bottom: 0 !important;
+    display: flex !important;
+    width: 100% !important;
+    gap: 10px !important;
+}
+
+/* Memaksa pembungkus input search menjadi lebih lebar */
+#filterForm .col-md-6:first-child {
+    flex: 1 1 auto !important;
+    width: auto !important;
+}
+
+/* Membatasi lebar area filter agar tidak rakus tempat */
+#filterForm .col-md-6:last-child {
+    flex: 0 0 auto !important;
+    width: auto !important;
+}
+
+/* Penyesuaian input agar seragam */
+.modern-input, .form-control[name="search"] {
+    height: 45px !important;
+    border-radius: 12px !important;
+    border: 1px solid #e5e7eb !important;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+    .toolbar-wrapper {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+
+    /* Semua child langsung: div pembungkus search, div pembungkus filter, tombol tambah */
+    .toolbar-wrapper > *,
+    .toolbar-wrapper > div,
+    .toolbar-wrapper > a {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: unset !important;
+        margin-left: 0 !important;
+        flex-shrink: unset !important;
+    }
+
+    /* Tombol tambah full width & teks tengah */
+    .toolbar-wrapper > a.btn {
+        display: flex !important;
+        justify-content: center !important;
+    }
+
+    /* Override ms-auto khusus tombol tambah di mobile */
+    .toolbar-btn-add {
+        margin-left: 0 !important;
+        width: 100% !important;
+        flex-shrink: unset !important;
+    }
+
+    /* Form di dalam wrapper juga full width */
+    .toolbar-wrapper form {
+        width: 100% !important;
+    }
+
+    /* Input & select full width */
+    .toolbar-wrapper .form-control,
+    .toolbar-wrapper .form-select {
+        width: 100% !important;
+    }
+
+    /* Tabel: aktifkan horizontal scroll */
+    .table-responsive {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+}

@@ -35,7 +35,7 @@ class TransactionController extends Controller
             ->exists();
 
         if ($exists) {
-            return back()->with('error', 'Anda sudah mengajukan atau meminjam buku ini.');
+            return back()->with('error', 'Anda sudah meminjam atau memiliki permintaan aktif untuk buku ini.');
         }
 
         Transaction::create([

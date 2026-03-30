@@ -1,0 +1,89 @@
+    /* Card Styling */
+    .edit-card { 
+        background: #ffffff; 
+        border-radius: 20px; 
+        border: none; 
+        box-shadow: 0 10px 30px rgba(30, 30, 30, 0.05); 
+        overflow: hidden; 
+    }
+
+    /* Header: Navy Solid */
+    .edit-header-accent { 
+        background: #1e1e1e; 
+        padding: 25px 30px; 
+        color: white; 
+    }
+
+    /* Label: Navy Muted */
+    .form-label { 
+        font-size: 12px; 
+        font-weight: 700; 
+        color: #1e1e1e; 
+        margin-bottom: 8px; 
+        text-transform: uppercase; 
+        letter-spacing: 0.8px; 
+    }
+
+    /* Input Styling: Soft Grey with Gold Focus */
+    .form-control, .form-select { 
+        background-color: #f8f9fa !important; 
+        border: 1.5px solid #eee !important; 
+        border-radius: 12px !important; 
+        padding: 12px 16px !important; 
+        color: #1e1e1e !important; 
+        transition: 0.3s;
+    }
+
+    .form-control:focus, .form-select:focus { 
+        border-color: #ad9a79 !important; 
+        background-color: #ffffff !important;
+        box-shadow: 0 0 0 3px rgba(173, 154, 121, 0.1) !important; 
+    }
+
+    /* Readonly Input */
+    .form-control[readonly] { 
+        background-color: #e9ecef !important; 
+        color: #6c757d !important; 
+        border-color: #dee2e6 !important;
+        cursor: not-allowed; 
+    }
+
+    /* Button Update: Gold */
+    .btn-save { 
+        background-color: #ad9a79; 
+        color: white; 
+        border: none; 
+        border-radius: 12px; 
+        padding: 14px 30px; 
+        font-weight: 700; 
+        width: 100%; 
+        transition: 0.3s; 
+        box-shadow: 0 5px 15px rgba(173, 154, 121, 0.3); 
+    }
+
+    .btn-save:hover { 
+        background-color: #8e7d60; 
+        transform: translateY(-2px);
+        color: white; 
+    }
+
+    /* Button Batal: Grey Muted */
+    .btn-cancel { 
+        background-color: #6c757d; 
+        color: #ffffff; 
+        border: none; 
+        border-radius: 12px; 
+        padding: 14px 30px; 
+        font-weight: 700; 
+        width: 100%; 
+        transition: 0.3s; 
+        display: block; 
+        text-align: center; 
+        text-decoration: none; 
+    }
+
+    .btn-cancel:hover { 
+        background-color: #5a6268; 
+        color: #ffffff; 
+        transform: translateY(-2px);
+    }

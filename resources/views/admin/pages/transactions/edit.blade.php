@@ -1,94 +1,98 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Edit Transaction')
+@section('title', 'Edit Transaksi')
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/admin/transactions/edit-transaction.css') }}">
+@endpush
 
 @section('content')
-<div class="manage-users-page">
+<div class="container-fluid px-4 py-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="edit-card">
 
-    <h2>Edit Transaksi</h2>
+                <div class="edit-header-accent text-center">
+                    <h5 class="mb-0" style="font-weight: 700; letter-spacing: 1px;">
+                        <i class="bi bi-pencil-square me-2"></i> UPDATE DATA TRANSAKSI
+                    </h5>
+                </div>
 
-    <form action="{{ route('admin.transactions.update', $transactions->id) }}" method="POST">
-        @csrf
-        @method('PUT')
+                <div class="card-body p-4 p-lg-5">
+                    <form action="{{ route('admin.transactions.update', $transactions->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
 
-        {{-- Nama Buku --}}
-        <div class="form-group">
-            <label>Nama Buku</label>
-            <input type="text"
-                class="form-control"
-                value="{{ $transactions->book->title }}"
-                readonly style="background-color: #f3f4f6;">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">Nama Buku</label>
+                                <input type="text" class="form-control"
+                                    value="{{ $transactions->book->title }}" readonly>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">Nama Peminjam</label>
+                                <input type="text" class="form-control"
+                                    value="{{ $transactions->user->name }}" readonly>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">Tanggal Pinjam</label>
+                                <input type="date" name="borrowed_at"
+                                    class="form-control @error('borrowed_at') is-invalid @enderror"
+                                    value="{{ old('borrowed_at', $transactions->borrowed_at->format('Y-m-d')) }}"
+                                    required>
+                                @error('borrowed_at') <small class="text-danger">{{ $message }}</small> @enderror
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">Batas Pengembalian</label>
+                                <input type="date" name="due_at"
+                                    class="form-control @error('due_at') is-invalid @enderror"
+                                    value="{{ old('due_at', $transactions->due_at->format('Y-m-d')) }}"
+                                    required>
+                                @error('due_at') <small class="text-danger">{{ $message }}</small> @enderror
+                            </div>
+
+                            <div class="col-12 mb-4">
+                                <label class="form-label">Status Transaksi</label>
+                                <select name="status" class="form-select @error('status') is-invalid @enderror" required>
+                                    <option value="borrowed" {{ old('status', $transactions->status) == 'borrowed' ? 'selected' : '' }}>
+                                        Dipinjam
+                                    </option>
+                                    <option value="returned" {{ old('status', $transactions->status) == 'returned' ? 'selected' : '' }}>
+                                        Dikembalikan
+                                    </option>
+                                    <option value="late" {{ old('status', $transactions->status) == 'late' ? 'selected' : '' }}>
+                                        Terlambat
+                                    </option>
+                                </select>
+                                @error('status') <small class="text-danger">{{ $message }}</small> @enderror
+                                <div class="mt-2" style="font-size: 13px; color: #6c757d;">
+                                    <i class="bi bi-info-circle-fill me-1 text-primary"></i> 
+                                    Status <strong>'Dikembalikan'</strong> akan mengembalikan stok buku secara otomatis.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3 g-3 justify-content-center">
+                            <div class="col-lg-4">
+                                <button type="submit" class="btn-save">
+                                    UPDATE TRANSAKSI <i class="bi bi-check-lg ms-2"></i>
+                                </button>
+                            </div>
+                            <div class="col-lg-4">
+                                <a href="{{ route('admin.transactions') }}" class="btn-cancel">
+                                    KEMBALI
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
         </div>
-
-        {{-- Nama User --}}
-        <div class="form-group">
-            <label>Nama User</label>
-            <input type="text"
-                class="form-control"
-                value="{{ $transactions->user->name }}"
-                readonly style="background-color: #f3f4f6;">
-        </div>
-
-        {{-- Tanggal Pinjam --}}
-        <div class="form-group">
-            <label>Tanggal Pinjam</label>
-            <input type="date"
-                name="borrowed_at"
-                class="form-control"
-                value="{{ old('borrowed_at', $transactions->borrowed_at->format('Y-m-d')) }}"
-                required>
-        </div>
-
-        {{-- Tanggal Jatuh Tempo (Batas Pengembalian) --}}
-        <div class="form-group">
-            <label>Batas Pengembalian (Due Date)</label>
-            <input type="date"
-                name="due_at"
-                class="form-control"
-                value="{{ old('due_at', $transactions->due_at->format('Y-m-d')) }}"
-                required>
-        </div>
-
-        {{-- Status Transaksi --}}
-        <div class="form-group" style="margin-top: 15px;">
-            <label>Status Transaksi</label>
-            <select name="status" class="form-control" required>
-                <option value="borrowed" {{ old('status', $transactions->status) == 'borrowed' ? 'selected' : '' }}>
-                    Dipinjam (Borrowed)
-                </option>
-                <option value="returned" {{ old('status', $transactions->status) == 'returned' ? 'selected' : '' }}>
-                    Dikembalikan (Returned)
-                </option>
-                <option value="late" {{ old('status', $transactions->status) == 'late' ? 'selected' : '' }}>
-                    Terlambat (Late)
-                </option>
-            </select>
-            <small style="color: #6b7280;">* Mengubah ke 'Returned' akan menambah stok buku secara otomatis.</small>
-        </div>
-
-        <div style="margin-top:30px;">
-            <button type="submit" class="btn btn-primary" style="padding: 10px 25px;">
-                Update Transaksi
-            </button>
-
-            <a href="{{ route('admin.transactions') }}" class="btn btn-secondary" style="padding: 10px 25px; margin-left: 10px;">
-                Batal
-            </a>
-        </div>
-    </form>
-
+    </div>
 </div>
-
-{{-- Tambahan CSS jika form-control belum rapi --}}
-<style>
-    .form-group { margin-bottom: 15px; }
-    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-    .form-control { 
-        width: 100%; 
-        padding: 8px; 
-        border: 1px solid #ddd; 
-        border-radius: 4px; 
-        box-sizing: border-box; 
-    }
-</style>
 @endsection

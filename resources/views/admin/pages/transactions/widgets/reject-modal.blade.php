@@ -1,28 +1,48 @@
 <div class="modal fade" id="rejectModal{{ $transaction->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content shadow-md">
-            <div class="modal-header" style="background-color: #7209DB; border-radius: 10px 10px 0 0;">
-                <h5 class="modal-title text-white">Tolak Peminjaman</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+            <div class="modal-header border-0 p-4" style="background-color: #1e1e1e;">
+                <h5 class="modal-title text-white fw-bold d-flex align-items-center">
+                    <i class="bi bi-x-circle-fill me-2 text-danger"></i> TOLAK PEMINJAMAN
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <form action="{{ route('admin.transactions.reject', $transaction->id) }}" method="POST">
                 @csrf
                 @method('PATCH')
 
-                <div class="modal-body">
+                <div class="modal-body p-4">
+                    <div class="alert alert-warning border-0 small mb-4" style="background-color: #fff9e6; color: #856404; border-radius: 12px;">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        Memberikan alasan yang jelas membantu pengguna memahami mengapa permintaan mereka ditolak.
+                    </div>
+
                     <div class="form-group">
-                        <label class="mb-2 fw-semibold text-dark">Alasan</label>
-                        <textarea name="reason" class="form-control" rows="7" required></textarea>
+                        <label class="mb-2 fw-bold text-dark small text-uppercase" style="letter-spacing: 0.5px;">
+                            Alasan Penolakan
+                        </label>
+                        <textarea name="reason" class="form-control border-0 shadow-sm @error('reason') is-invalid @enderror" 
+                            style="background-color: #f8f9fa; border-radius: 15px; padding: 15px; resize: none;" 
+                            rows="5" 
+                            placeholder="Contoh: Stok buku sedang dalam perbaikan atau data tidak valid..." required ></textarea>
+                        @error('reason')
+                            <div class="invalid-feedback small mt-2 ps-2">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn text-white" style="background-color: #DB0909;" data-bs-dismiss="modal">
-                        Batal
+                <div class="modal-footer border-0 p-4 pt-0">
+                    <button type="button" class="btn px-4 py-2 fw-bold" 
+                            style="background-color: #eee; color: #666; border-radius: 10px; border: none;" 
+                            data-bs-dismiss="modal">
+                        BATAL
                     </button>
-                    <button type="submit" class="btn text-white" style="background-color: #7209DB;">
-                        Tolak
+                    <button type="submit" class="btn px-4 py-2 fw-bold text-white shadow-sm" 
+                            style="background-color: #dc3545; border-radius: 10px; border: none; transition: 0.3s;">
+                        KONFIRMASI TOLAK
                     </button>
                 </div>
             </form>
