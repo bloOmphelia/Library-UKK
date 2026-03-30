@@ -7,12 +7,13 @@ use App\Models\Book;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Notifications\TransactionNotification;
 
 class TransactionController extends Controller
 {
     public function index (Request $request)
     {
-        $transactions = Transaction::with(['book','user'])->filter($request->all(), ['book.title', 'user.name'])->paginate(10)->withQueryString();
+        $transactions = Transaction::with(['book','user'])->filter($request->only(['search', 'status']), ['book.title', 'user.name'])->latest()->paginate(10)->withQueryString();
         return view('admin.pages.transactions.index', compact('transactions'));
     }
 
@@ -26,16 +27,41 @@ class TransactionController extends Controller
   
     public function store(Request $request)
     {
-        $request->validate([
+       $rules = [
             'book_id' => 'required|exists:books,id',
             'user_id' => 'required|exists:users,id',
             'borrowed_at' => 'required|date',
             'due_at' => 'required|date|after_or_equal:borrowed_at',
-        ]);
+        ];
 
-        $books = Book::findOrFail($request->book_id);
+        $messages = [
+            'required' => ':attribute wajib diisi.',
+            'exists'   => ':attribute tidak valid.',
+            'date'     => ':attribute harus berupa format tanggal.',
+            'after_or_equal' => ':attribute tidak boleh sebelum tanggal pinjam.',
+        ];
 
-        if ($books->stock < 1) {
+        $attributes = [
+            'book_id' => 'Buku',
+            'user_id' => 'Siswa',
+            'borrowed_at' => 'Tanggal pinjam',
+            'due_at' => 'Tanggal kembali',
+        ];
+
+        $request->validate($rules, $messages, $attributes);
+
+        $book = Book::findOrFail($request->book_id);
+
+        $existingTransaction = Transaction::where('user_id', $request->user_id)
+            ->where('book_id', $request->book_id)
+            ->whereIn('status', ['borrowed', 'pending'])
+            ->exists();
+
+        if ($existingTransaction) {
+            return redirect()->back()->with('error', 'User masih meminjam atau memiliki antrean untuk buku ini.');
+        }
+
+        if ($book->stock < 1) {
             return redirect()->back()->with('error', 'Buku tidak tersedia untuk dipinjam.');
         }
 
@@ -47,14 +73,16 @@ class TransactionController extends Controller
             'status' => 'borrowed',
         ]);
 
-        $books->decrement('stock');
+        $book->decrement('stock');
 
-        return redirect()->route('admin.transactions')->with('success', 'Transaksi berhasil ditambahkan.');
+        return redirect()->back()
+            ->withInput($request->except(['book_id', 'user_id']))
+            ->with('success', 'Transaksi berhasil ditambahkan.');
     }
 
     public function approve(Request $request, $id)
     {
-        $transaction = Transaction::with('book')->findOrFail($id);
+        $transaction = Transaction::with(['book', 'user'])->findOrFail($id); 
 
         if ($transaction->status !== 'pending') {
             return back()->with('error', 'Transaksi sudah diproses.');
@@ -63,6 +91,13 @@ class TransactionController extends Controller
         $request->validate([
             'borrowed_at' => 'required|date',
             'due_at' => 'required|date|after_or_equal:borrowed_at',
+        ], [
+            'required' => ':attribute wajib diisi.',
+            'date'     => ':attribute harus format tanggal valid.',
+            'after_or_equal' => ':attribute tidak boleh sebelum tanggal pinjam.',
+        ], [
+            'borrowed_at' => 'Tanggal pinjam',
+            'due_at'      => 'Tanggal kembali',
         ]);
 
         if ($transaction->book->stock < 1) {
@@ -77,12 +112,15 @@ class TransactionController extends Controller
 
         $transaction->book->decrement('stock');
 
+        $message = "Peminjaman buku '{$transaction->book->title}' telah disetujui!";
+        $transaction->user->notify(new TransactionNotification($message, 'success', 'bi-check-circle-fill'));
+
         return back()->with('success', 'Transaksi berhasil disetujui.');
     }
 
     public function reject(Request $request, $id)
     {
-        $transaction = Transaction::findOrFail($id);
+        $transaction = Transaction::with(['book', 'user'])->findOrFail($id);
 
         if ($transaction->status !== 'pending') {
             return back()->with('error', 'Transaksi sudah diproses.');
@@ -90,12 +128,18 @@ class TransactionController extends Controller
 
         $request->validate([
             'reason' => 'required|string|max:255',
+        ], [
+            'required' => 'Alasan penolakan wajib diisi.',
+            'max'      => 'Alasan terlalu panjang (maksimal 255 karakter).'
         ]);
 
         $transaction->update([
             'status' => 'rejected',
             'reject_reason' => $request->reason,
         ]);
+
+        $message = "Maaf, pengajuan peminjaman buku '{$transaction->book->title}' ditolak karena: {$request->reason}";
+        $transaction->user->notify(new TransactionNotification($message, 'danger', 'bi-exclamation-triangle-fill'));
 
         return back()->with('success', 'Transaksi ditolak.');
     }
@@ -122,6 +166,13 @@ class TransactionController extends Controller
         $request->validate([
             'borrowed_at' => 'required|date',
             'due_at'      => 'required|date|after_or_equal:borrowed_at',
+        ], [
+            'required' => ':attribute tidak boleh kosong.',
+            'date'     => ':attribute harus tanggal valid.',
+            'after_or_equal' => ':attribute harus sama atau setelah tanggal pinjam.',
+        ], [
+            'borrowed_at' => 'Tanggal pinjam',
+            'due_at'      => 'Tanggal tenggat',
         ]);
 
         $transactions->update([
@@ -136,8 +187,9 @@ class TransactionController extends Controller
     {
         $transactions = Transaction::findOrFail($id);
 
-        if($transactions->status === 'borrowed') {
-            $transactions->book->increment('stock');
+        if ($transactions->status === 'borrowed') {
+            return redirect()->route('admin.transactions')
+                ->with('error', 'Transaksi sedang aktif! Buku harus dikembalikan terlebih dahulu sebelum data bisa dihapus.');
         }
 
         $transactions->delete();
