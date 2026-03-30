@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalDetail" tabindex="-1" aria-labelledby="modalDetailLabel" aria-hidden="true">
+<div class="modal fade" id="modalDetail" tabindex="-1" data-bs-backdrop="false" aria-labelledby="modalDetailLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 480px;">
         <div class="modal-content border-0 rounded-4 overflow-hidden shadow-lg">
             <div class="modal-header border-0 text-white position-relative p-0" style="background: #1e1e1e; height: 110px;">

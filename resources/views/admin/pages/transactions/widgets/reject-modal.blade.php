@@ -1,6 +1,11 @@
-<div class="modal fade" id="rejectModal{{ $transaction->id }}" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="rejectModal{{ $transaction->id }}" tabindex="-1" data-bs-backdrop="false" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 12px; overflow: hidden; border: none; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 
+            0 10px 20px -8px rgba(0, 0, 0, 0.15), 
+            0 4px 8px -4px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);">
             <div class="modal-header border-0 p-4" style="background-color: #1e1e1e;">
                 <h5 class="modal-title text-white fw-bold d-flex align-items-center">
                     <i class="bi bi-x-circle-fill me-2 text-danger"></i> TOLAK PEMINJAMAN

@@ -1,6 +1,7 @@
 <div class="modal fade"
      id="approveModal{{ $transaction->id }}"
      tabindex="-1"
+     data-bs-backdrop="false" 
      aria-labelledby="approveTransaction{{ $transaction->id }}"
      aria-hidden="true">
 
@@ -9,7 +10,12 @@
             action="{{ route('admin.transactions.approve', $transaction->id) }}"
             method="POST"
             class="modal-content"
-            style="border-radius: 12px; overflow: hidden; border: none;"
+            style="border-radius: 12px; overflow: hidden; border: none; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 
+            0 10px 20px -8px rgba(0, 0, 0, 0.15), 
+            0 4px 8px -4px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);"
         >
             @csrf
             @method('PATCH')
