@@ -17,7 +17,7 @@ class DashboardController extends Controller
         $user = Auth::user();
         $now = Carbon::now();
 
-        // 1. Logika Utama Keterlambatan (Hanya membandingkan TANGGAL)
+        // Logika Utama Keterlambatan (Hanya membandingkan TANGGAL)
         $lateCriteria = function($query) {
             $query->where('status', 'late')
                 ->orWhere(function($q) {
@@ -32,21 +32,20 @@ class DashboardController extends Controller
                 });
         };
 
-        // 2. Statistik Dasar
+        // Statistik Dasar
         $totalTransactions = Transaction::count();
         $booksAvailable = Book::where('stock', '>', 0)->count();
         $totalCategories = Category::count();
         $totalMembers = User::role('student')->count();
 
-        // 3. Statistik Pengembalian (Untuk Donut Chart)
-        // Tepat Waktu = dikembalikan pada tanggal yang sama atau sebelumnya
+        // Untuk Donut Chart
         $onTimeReturns = Transaction::where('status', 'returned')
         ->whereRaw('DATEDIFF(returned_at, due_at) <= 0')
         ->count();
 
         $lateReturns = Transaction::where($lateCriteria)->count();
 
-        // 4. SINKRONISASI: Card Atas & Tabel List Terlambat
+        // Card Atas & Tabel List Terlambat
         $overdueBooks = $lateReturns; 
         
         $overdueList = Transaction::with(['user', 'book'])
@@ -55,7 +54,7 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        // 5. Transaksi Terbaru & Chart Batang
+        // Transaksi Terbaru & Chart Batang
         $recentTransactions = Transaction::with(['user', 'book'])->latest()->take(5)->get();
 
         $transactionsPerMonth = Transaction::selectRaw('MONTH(created_at) as month, COUNT(*) as total')

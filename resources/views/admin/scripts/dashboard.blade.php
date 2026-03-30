@@ -2,9 +2,12 @@
 const labels = @json($allMonths);
 const data = @json($chartData);
 
+const smartLibNavy = '#1e1e1e'; 
+const smartLibGold = '#ad9a79';    
+
 var barOptions = {
   series: [{
-    name: "Transactions This Year",
+    name: "Total Transaksi",
     data: data
   }],
   chart: {
@@ -13,30 +16,45 @@ var barOptions = {
     toolbar: { show: false }
   },
 
-  colors: ['#AC7FF6'], 
+  colors: [smartLibNavy], 
   plotOptions: {
     bar: {
       borderRadius: 6,
-      columnWidth: "40%",
+      columnWidth: "35%", 
       distributed: false,
     }
   },
   fill: {
     type: 'gradient',
     gradient: {
-      shade: 'light',
+      shade: 'dark',
       type: "vertical",
+      gradientToColors: [smartLibGold], 
+      inverseColors: false,
       opacityFrom: 1,
-      opacityTo: 0.8,
+      opacityTo: 0.9,
     }
   },
   xaxis: {
     categories: labels,
     axisBorder: { show: false },
-    axisTicks: { show: false }
+    axisTicks: { show: false },
+    labels: {
+      style: {
+        colors: '#8e8e8e',
+        fontFamily: 'DM Sans, sans-serif'
+      }
+    }
   },
   yaxis: {
-    min: 0
+    min: 0,
+    labels: {
+      style: { colors: '#8e8e8e' }
+    }
+  },
+  grid: {
+    borderColor: '#f4f4f4',
+    strokeDashArray: 4,
   },
   dataLabels: {
     enabled: false
@@ -64,26 +82,47 @@ var donutOptions = {
   series: donutData,
   chart: {
     type: "donut",
-    height: 350
+    height: 280 
   },
   labels: donutLabels,
-  colors: ["#ABCFF3", "#E892C0"], 
+ 
+  colors: [ smartLibGold, smartLibNavy], 
   
   stroke: {
     show: true,
-    width: 2,
+    width: 3,
     colors: ['#fff']
   },
   plotOptions: {
     pie: {
       donut: {
-        size: "50%", 
+        size: "70%", 
+        labels: {
+            show: true,
+            total: {
+                show: true,
+                label: 'Total',
+                formatter: function (w) {
+                    return (onTime + late);
+                }
+            }
+        }
       }
     }
+  },
+  dataLabels: {
+    enabled: false
   },
   legend: {
     show: false
   },
+  tooltip: {
+    y: {
+      formatter: function (val) {
+        return val + " Buku";
+      }
+    }
+  }
 };
 
 var donutChart = new ApexCharts(document.querySelector("#donutChart"), donutOptions);

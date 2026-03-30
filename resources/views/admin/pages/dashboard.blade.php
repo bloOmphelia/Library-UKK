@@ -3,58 +3,60 @@
 @section('title', 'Dashboard Admin')
 
 @section('content')
-<div>
-    <div class="px-2 py-2 mb-3">
-        <h3 class="fw-bold">Dashboard</h3>
-    </div>
-</div>
 
-<div style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-bottom:30px;">
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/admin/dashboard.css') }}">
+@endpush
 
-    @php
-        $stats = [
-            ['label'=>'Buku Dipinjam', 'value'=>$totalTransactions ?? 0, 'color'=>'#40487A', 'icon'=> '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#40487A" d="M13.09 20c.12.72.37 1.39.72 2H6c-1.11 0-2-.89-2-2V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9.09c-.33-.05-.66-.09-1-.09s-.67.04-1 .09V4h-5v8l-2.5-2.25L8 12V4H6v16zM15 18v2h8v-2z"/></svg>'],
-            ['label'=>'Buku Tersedia', 'value'=>$booksAvailable ?? 0, 'color'=>'#E892C0', 'icon'=> '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#E892C0" d="m16.75 22.16l-2.75-3L15.16 18l1.59 1.59L20.34 16l1.16 1.41zM18 2c1.1 0 2 .9 2 2v9.34c-.63-.22-1.3-.34-2-.34V4h-5v8l-2.5-2.25L8 12V4H6v16h6.08c.12.72.37 1.39.72 2H6c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2z"/></svg>'],
-            ['label'=>'Buku Terlambat', 'value'=>$overdueBooks ?? 0, 'color'=>'#AC7FF6', 'icon'=> '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#AC7FF6" d="M16 2H4c-1.1 0-2 .9-2 2v16a2 2 0 0 0 2 2h12c1.11 0 2-.89 2-2V4a2 2 0 0 0-2-2m0 18H4V4h2v8l2.5-2.25L11 12V4h5zm4-5h2v2h-2zm2-8v6h-2V7z"/></svg>'],
-            ['label'=>'Total Kategori', 'value'=>$totalCategories ?? 0, 'color'=>'#ABCFF3', 'icon'=> '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#ABCFF3" fill-rule="evenodd" d="M20 4H4v1.5h16zm-2 9h-3c-1.1 0-2 .9-2 2v3c0 1.1.9 2 2 2h3c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2m.5 5c0 .3-.2.5-.5.5h-3c-.3 0-.5-.2-.5-.5v-3c0-.3.2-.5.5-.5h3c.3 0 .5.2.5.5zM4 9.5h9V8H4zM9 13H6c-1.1 0-2 .9-2 2v3c0 1.1.9 2 2 2h3c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2m.5 5c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5v-3c0-.3.2-.5.5-.5h3c.3 0 .5.2.5.5z"/></svg>'],
-        ];
-    @endphp
+<div class="page-content dashboard-wrapper">
+    <x-breadcrumb 
+        title="Dashboard Admin"
+        description="Kelola data perpustakaan"
+        category="Manajemen"
+        bgColor="var(--hero-bg)" 
+        imgWidth="70px"
+    />
 
-    @foreach($stats as $s)
-        <div style="background:white; padding:20px; border-radius:14px; box-shadow:0 8px 20px rgba(64, 72, 122, .06); border-bottom: 4px solid {{ $s['color'] }};">
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom: 10px;">
-                @if(isset($s['icon']))
-                    <div style="background: {{ $s['color'] }}15; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                        <div style="transform: scale(0.85); display: flex; align-items: center;">
-                            {!! $s['icon'] !!}
-                        </div>
+    {{-- Stats Cards --}}
+    <div class="stats-grid">
+        @php
+            $stats = [
+                ['label'=>'Buku Dipinjam', 'value'=>$totalTransactions ?? 0, 'color'=>'var(--dark)', 'icon'=> 'bi-book'],
+                ['label'=>'Buku Tersedia', 'value'=>$booksAvailable ?? 0, 'color'=>'var(--accent)', 'icon'=> 'bi-check-circle'],
+                ['label'=>'Buku Terlambat', 'value'=>$overdueBooks ?? 0, 'color'=>'#fb6f6f', 'icon'=> 'bi-exclamation-triangle'],
+                ['label'=>'Total Kategori', 'value'=>$totalCategories ?? 0, 'color'=>'#ABCFF3', 'icon'=> 'bi-grid'],
+            ];
+        @endphp
+
+        @foreach($stats as $s)
+            <div class="stat-card" style="border-bottom: 4px solid {{ $s['color'] }};">
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                    <div style="background:{{ $s['color'] }}15; width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:{{ $s['color'] }}; font-size:20px; flex-shrink:0;">
+                        <i class="bi {{ $s['icon'] }}"></i>
                     </div>
-                @endif
-                <p style="font-size:15px; color:#40487A; font-weight: 500; margin: 0;">
-                    {{ $s['label'] }}
-                </p>
+                    <p style="font-size:13px; color:var(--muted); font-weight:600; margin:0; text-transform:uppercase; letter-spacing:0.5px;">
+                        {{ $s['label'] }}
+                    </p>
+                </div>
+                <h2 style="font-size:28px; color:var(--dark); font-weight:800; margin:0; font-family:'Fraunces',serif;">
+                    {{ $s['value'] }} <span style="font-size:14px; font-weight:500; color:var(--muted);">Buku</span>
+                </h2>
             </div>
-            <h2 style="font-size:24px; color:{{ $s['color'] }}; font-weight: 700; margin: 0; padding-left: 10px;">
-                {{ $s['value'] }} <span style="font-size: 14px; font-weight: 500; opacity: 0.8;">Buku</span>
-            </h2>
-        </div>
-    @endforeach
-</div>
+        @endforeach
+    </div>
 
-<div style="display:grid; grid-template-rows: auto auto; gap:25px;">
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-        <div style="background:white; padding:25px; border-radius:16px; box-shadow:0 8px 20px rgba(0,0,0,.04); height: 320px; display:flex; flex-direction:column;">
-            <h3 style="font-size:16px; color:#40487A; margin-bottom:15px; font-weight:700;">
-                Transaksi Terbaru
-            </h3>
-
-            <div style="flex:1; overflow:auto;">
-                <table style="width:100%; border-collapse:collapse; font-size:14px;">
+    {{-- Row 1 --}}
+    <div class="row-top">
+        {{-- Transaksi Terbaru --}}
+        <div class="card-box">
+            <h3 class="font-fraunces">Transaksi Terbaru</h3>
+            <div class="table-scroll-wrapper">
+                <table>
                     <thead>
-                        <tr style="color:#40487A; border-bottom:2px solid #E3EFFF; text-align:left;">
-                            <th style="padding:10px;">Nama Pengguna</th>
-                            <th style="padding:10px;">Judul Buku</th>
-                            <th style="padding:10px;">Status</th>
+                        <tr style="color:var(--muted); border-bottom:2px solid #f4f4f4; text-align:left;">
+                            <th style="padding:12px;">Nama Pengguna</th>
+                            <th style="padding:12px;">Judul Buku</th>
+                            <th style="padding:12px;">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,100 +71,122 @@
                         @endphp
 
                         @forelse($recentTransactions as $trx)
-                        <tr style="border-bottom:1px solid #f9fafb;">
-                            <td style="padding:10px; color: #4b5563;">{{ $trx->user->name }}</td>
-                            <td style="padding:10px; color: #4b5563;">{{ $trx->book->title }}</td>
-                            <td style="padding:10px;">
-                                <span style="
-                                    padding:4px 10px; 
-                                    border-radius:20px; 
-                                    font-size:11px; 
-                                    font-weight: 600; 
-                                    text-transform: uppercase;
-                                    background: {{ $statusColors[$trx->status]['bg'] ?? '#E3EFFF' }};
-                                    color: {{ $statusColors[$trx->status]['text'] ?? '#40487A' }};
-                                ">
+                        <tr style="border-bottom:1px solid #fbfbfb;">
+                            <td style="padding:14px 16px;">
+                                <div class="d-flex align-items-center gap-3">
+                                    @if($trx->user->photo)
+                                        <img src="{{ asset('storage/' . $trx->user->photo) }}" 
+                                            class="rounded-circle shadow-sm flex-shrink-0"
+                                            style="width:44px; height:44px; object-fit:cover; border:2px solid #f0ebe2;">
+                                    @else
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                            style="width:44px; height:44px; background:#f0ebe2; border:1px solid #e5e0d8;">
+                                            <i class="bi bi-person-fill" style="font-size:18px; color:#ad9a79;"></i>
+                                        </div>
+                                    @endif
+                                    <div style="min-width:0;">
+                                        <div class="fw-bold text-truncate" style="color:#1e1e1e; font-size:13.5px; max-width:150px;">
+                                            {{ $trx->user->name ?? '-' }}
+                                        </div>
+                                        <div class="text-truncate" style="font-size:11.5px; color:#8e8e8e; max-width:150px;">
+                                            <i class="bi bi-envelope me-1"></i>{{ $trx->user->email ?? '-' }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="padding:12px; color:var(--muted);">
+                                {{ Str::limit($trx->book?->title ?? 'Buku Tidak Ditemukan', 35) }}
+                            </td>
+                            <td style="padding:12px;">
+                                <span style="padding:5px 12px; border-radius:30px; font-size:10px; font-weight:700; text-transform:uppercase; white-space:nowrap; background:{{ $statusColors[$trx->status]['bg'] ?? '#eee' }}; color:{{ $statusColors[$trx->status]['text'] ?? '#666' }};">
                                     {{ $trx->status_label }}
                                 </span>
                             </td>
                         </tr>
                         @empty
-                        <tr>
-                            <td colspan="3" style="padding:30px; text-align:center; color:#9ca3af;">Belum ada Transaksi.</td>
-                        </tr>
+                        <x-empty-state colspan="3" description="Belum ada data transaksi yang tercatat." />
                         @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <div style="background:white; padding:25px; border-radius:16px; box-shadow:0 8px 20px rgba(0,0,0,.04); height: 320px; display:flex; flex-direction:column;">
-            <h3 style="font-size:16px; color:#40487A; margin-bottom:15px; font-weight:700;">
-                Total Transaksi
-            </h3>
-            <div style="flex:1;">
-                <div id="barChart"></div>
-            </div>
+        {{-- Bar Chart --}}
+        <div class="card-box">
+            <h3 class="font-fraunces">Total Transaksi</h3>
+            <div style="flex:1; min-height:0;"><div id="barChart" style="height:100%;"></div></div>
         </div>
     </div>
 
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-
-        <div style="background:white; padding:25px; border-radius:16px; box-shadow:0 8px 20px rgba(0,0,0,.04); height: 320px; display:flex; flex-direction:column;">
-            <h3 style="font-size:16px; color:#40487A; margin-bottom:15px; font-weight:700;">
-                Statistik Pengembalian
-            </h3>
-            <div style="display:flex; align-items:center; gap:25px; flex:1;">
-                <div style="width:180px; height:180px;">
-                    <div id="donutChart"></div>
-                </div>
-                <div style="color: #4b5563;">
-                    <p style="margin-bottom:12px; display: flex; align-items: center; gap: 8px;">
-                        <span style="width:12px; height:12px; border-radius:3px; background:#ABCFF3; display:inline-block;"></span>
-                        Tepat Waktu: <strong style="color:#40487A;">{{ $onTimeReturns ?? 0 }}</strong>
+    {{-- Row 2 --}}
+    <div class="row-bottom">
+        {{-- Donut Chart --}}
+        <div class="card-box">
+            <h3 class="font-fraunces">Statistik Pengembalian</h3>
+            <div class="donut-wrapper" style="display:flex; align-items:center; justify-content:center; gap:25px; flex:1;">
+                <div id="donutChart" style="min-height:200px; flex-shrink:0;"></div>
+                <div style="font-size:14px;">
+                    <p style="margin-bottom:10px;">
+                        <span style="width:10px; height:10px; border-radius:2px; background:#ad9a79; display:inline-block; margin-right:8px;"></span>
+                        Tepat Waktu: <strong style="color:var(--dark);">{{ $onTimeReturns ?? 0 }}</strong>
                     </p>
-                    <p style="display: flex; align-items: center; gap: 8px;">
-                        <span style="width:12px; height:12px; border-radius:3px; background:#E892C0; display:inline-block;"></span>
-                        Terlambat: <strong style="color:#40487A;">{{ $lateReturns ?? 0 }}</strong>
+                    <p>
+                        <span style="width:10px; height:10px; border-radius:2px; background:#1e1e1e; display:inline-block; margin-right:8px;"></span>
+                        Terlambat: <strong style="color:var(--dark);">{{ $lateReturns ?? 0 }}</strong>
                     </p>
                 </div>
             </div>
         </div>
 
-        <div style="background:white; padding:25px; border-radius:16px; box-shadow:0 8px 20px rgba(0,0,0,.04); height: 320px; display:flex; flex-direction:column; border: 1px solid #FADDEE;">
-            <h3 style="font-size:16px; color:#E892C0; margin-bottom:15px; font-weight:700;">
-                Buku Terlambat Dikembalikan
-            </h3>
-            <div style="flex:1; overflow:auto;">
-                <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        {{-- Overdue Table --}}
+        <div class="card-box overdue">
+            <h3 class="font-fraunces">Buku Terlambat Dikembalikan</h3>
+            <div class="table-scroll-wrapper overdue-table">
+                <table>
                     <thead>
-                        <tr style="color:#4b5563; border-bottom:1px solid #E3EFFF; text-align:left;">
-                            <th style="padding:10px;">Nama Pengguna</th>
-                            <th style="padding:10px;">Judul Buku</th>
-                            <th style="padding:10px;">Terlambat</th>
+                        <tr style="color:var(--muted); border-bottom:1px solid #f4f4f4; text-align:left;">
+                            <th style="padding:12px;">Nama Pengguna</th>
+                            <th style="padding:12px;">Judul Buku</th>
+                            <th style="padding:12px;">Durasi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($overdueList as $late)
-                        <tr style="border-bottom:1px solid #f9fafb;">
-                            <td style="padding:10px;">{{ $late->user->name }}</td>
-                            <td style="padding:10px;">{{ $late->book->title }}</td>
-                            <td style="padding:10px; color:#E892C0; font-weight:700;">
+                        <tr style="border-bottom:1px solid #fbfbfb;">
+                            <td style="padding:14px 16px;">
+                                <div class="d-flex align-items-center gap-3">
+                                    @if($late->user->photo)
+                                        <img src="{{ asset('storage/' . $late->user->photo) }}" 
+                                            class="rounded-circle shadow-sm flex-shrink-0"
+                                            style="width:44px; height:44px; object-fit:cover; border:2px solid #f0ebe2;">
+                                    @else
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                            style="width:44px; height:44px; background:#f0ebe2; border:1px solid #e5e0d8;">
+                                            <i class="bi bi-person-fill" style="font-size:18px; color:#ad9a79;"></i>
+                                        </div>
+                                    @endif
+                                    <div style="min-width:0;">
+                                        <div class="fw-bold text-truncate" style="color:#1e1e1e; font-size:13.5px; max-width:150px;">
+                                            {{ $late->user->name ?? '-' }}
+                                        </div>
+                                        <div class="text-truncate" style="font-size:11.5px; color:#8e8e8e; max-width:150px;">
+                                            <i class="bi bi-envelope me-1"></i>{{ $late->user->email ?? '-' }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="padding:12px; color:var(--muted);">{{ Str::limit($late->book->title, 30) }}</td>
+                            <td style="padding:12px; color:#fb6f6f; font-weight:800; white-space:nowrap;">
                                 @php
                                     $due = \Carbon\Carbon::parse($late->due_at)->startOfDay();
-                                    $end = $late->returned_at 
-                                        ? \Carbon\Carbon::parse($late->returned_at)->startOfDay() 
-                                        : \Carbon\Carbon::today();
-
+                                    $end = $late->returned_at ? \Carbon\Carbon::parse($late->returned_at)->startOfDay() : \Carbon\Carbon::today();
                                     $daysLate = $due->diffInDays($end, false);
                                 @endphp
                                 {{ $daysLate > 0 ? $daysLate : 0 }} Hari
                             </td>
                         </tr>
                         @empty
-                        <tr>
-                            <td colspan="3" style="padding:30px; text-align:center; color:#9ca3af;">Tidak ada keterlambatan.</td>
-                        </tr>
+                        <x-empty-state colspan="3" description="Belum ada data keterlambatan." />
                         @endforelse
                     </tbody>
                 </table>

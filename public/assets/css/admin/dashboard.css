@@ -1,0 +1,134 @@
+    .dashboard-wrapper {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    /* Row 1: Transaksi + Bar Chart */
+    .row-top {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 25px;
+        margin-bottom: 25px;
+    }
+
+    /* Row 2: Donut + Overdue */
+    .row-bottom {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 25px;
+    }
+
+    .card-box {
+        background: white;
+        padding: 25px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        height: 350px;
+        display: flex;
+        flex-direction: column;
+        min-width: 0; /* prevent overflow */
+    }
+
+    .card-box.overdue {
+        border-top: 4px solid var(--accent);
+    }
+
+    .card-box h3 {
+        font-size: 17px;
+        color: var(--dark);
+        margin-bottom: 20px;
+        font-weight: 800;
+        flex-shrink: 0;
+    }
+
+    .table-scroll-wrapper {
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-scroll-wrapper table {
+        width: 100%;
+        min-width: 480px; /* force horizontal scroll on small screens */
+        border-collapse: collapse;
+        font-size: 14px;
+    }
+
+    .table-scroll-wrapper.overdue-table table {
+        font-size: 13px;
+        min-width: 420px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 22px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        transition: transform 0.3s;
+        min-width: 0;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Tablet */
+    @media (max-width: 1024px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .row-top,
+        .row-bottom {
+            grid-template-columns: 1fr;
+        }
+
+        .card-box {
+            height: auto;
+            min-height: 320px;
+        }
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+        .stats-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .card-box {
+            padding: 18px;
+            min-height: 280px;
+        }
+
+        .stat-card {
+            padding: 16px;
+        }
+
+        .stat-card h2 {
+            font-size: 22px !important;
+        }
+
+        .donut-wrapper {
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 15px !important;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
