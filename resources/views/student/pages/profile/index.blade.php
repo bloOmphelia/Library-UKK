@@ -22,7 +22,6 @@
                         @csrf
                         @method('PUT')
 
-                        <!-- Profile Image - SAMAN DENGAN KODE 2 -->
                         <div class="text-center mb-5">
                             <div class="profile-upload-wrapper">
                                 <div class="profile-preview-container" id="profileContainer">
@@ -42,7 +41,6 @@
                             @error('photo') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
 
-                        <!-- Fields Siswa - DIPERTAHANKAN -->
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <label class="form-label">Nama Lengkap</label>
@@ -79,7 +77,6 @@
                             </div>
                         </div>
 
-                        <!-- Button - SAMAN DENGAN KODE 2 -->
                         <div class="row">
                             <div class="col-lg-5 mx-auto text-center">
                                 <button type="submit" class="btn-update-profile">
@@ -97,7 +94,6 @@
 
 @push('scripts')
 <script>
-    // JavaScript diperbaiki SAMAN DENGAN KODE 2
     function previewFile(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
