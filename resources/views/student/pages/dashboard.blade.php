@@ -10,20 +10,14 @@
 @section('content')
 <div class="dashboard-wrap">
 
-    <div class="card welcome-card">
-        <div class="card-body p-4 p-lg-5">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <h1 style="font-family: 'Fraunces'; font-weight: 900; font-size: 32px; color: var(--dark);">Selamat Datang di SmartLib</h1>
-                    <p class="text-muted">Halo, <strong>{{ $user->name }}</strong> — Mau baca apa kita hari ini?</p>
-                </div>
-                <div class="col-lg-4 d-none d-lg-block text-center">
-                    <img src="{{ asset('assets/users/admin/dist/images/backgrounds/track-bg.png') }}" 
-                         width="180px" alt="Welcome" class="img-fluid" />
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-breadcrumb 
+        title="Selamat Datang di SmartLib"
+        :description="'Halo, ' . $user->name . ' — Mau baca apa kita hari ini?'"
+        category="Dashboard"
+        bgColor="var(--primary-bg)" 
+        :image="asset('assets/users/admin/dist/images/backgrounds/track-bg.png')"
+        imgWidth="180px"
+    />
 
     <div class="stats-grid">
         <div class="stat-card">
