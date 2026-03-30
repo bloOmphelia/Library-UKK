@@ -17,7 +17,6 @@
         imgWidth="70px"
     />
 
-    {{-- Stats Cards --}}
     <div class="stats-grid">
         @php
             $stats = [
@@ -45,9 +44,7 @@
         @endforeach
     </div>
 
-    {{-- Row 1 --}}
     <div class="row-top">
-        {{-- Transaksi Terbaru --}}
         <div class="card-box">
             <h3 class="font-fraunces">Transaksi Terbaru</h3>
             <div class="table-scroll-wrapper">
@@ -111,16 +108,13 @@
             </div>
         </div>
 
-        {{-- Bar Chart --}}
         <div class="card-box">
             <h3 class="font-fraunces">Total Transaksi</h3>
             <div style="flex:1; min-height:0;"><div id="barChart" style="height:100%;"></div></div>
         </div>
     </div>
 
-    {{-- Row 2 --}}
     <div class="row-bottom">
-        {{-- Donut Chart --}}
         <div class="card-box">
             <h3 class="font-fraunces">Statistik Pengembalian</h3>
             <div class="donut-wrapper" style="display:flex; align-items:center; justify-content:center; gap:25px; flex:1;">
@@ -138,7 +132,6 @@
             </div>
         </div>
 
-        {{-- Overdue Table --}}
         <div class="card-box overdue">
             <h3 class="font-fraunces">Buku Terlambat Dikembalikan</h3>
             <div class="table-scroll-wrapper overdue-table">
