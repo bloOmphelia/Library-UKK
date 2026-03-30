@@ -1,0 +1,184 @@
+
+.dashboard-wrap { font-family: 'DM Sans', sans-serif; padding-top: 10px; }
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.section-header h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--dark);
+    margin: 0;
+}
+
+.view-all {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+    text-decoration: none;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    padding: 6px 16px;
+    transition: all .2s ease;
+}
+
+.view-all:hover {
+    background: var(--dark);
+    color: #fff;
+    border-color: var(--dark);
+}
+
+/* ===============================
+   WELCOME & SEARCH
+=================================*/
+.welcome-card {
+    background-color: var(--primary-bg) !important;
+    border-radius: 24px !important;
+    border: none !important;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+.search-bar-custom {
+    position: relative;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+.search-bar-custom input {
+    width: 100%;
+    padding: 12px 20px 12px 45px;
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.1);
+    outline: none;
+    transition: all 0.3s;
+}
+
+.search-bar-custom input:focus { border-color: #b39ddb; box-shadow: 0 0 0 4px rgba(179, 157, 219, 0.2); }
+
+.search-bar-custom i {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+}
+
+/* ===============================
+   STATS GRID
+=================================*/
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: #fff;
+    padding: 24px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+}
+
+.stat-icon.green { background: #e8f5e9; color: #2e7d32; }
+.stat-icon.amber { background: #fff8e1; color: #ffa000; }
+
+.stat-label { font-size: 13px; color: var(--muted); margin: 0; }
+.stat-value { font-size: 22px; font-weight: 700; color: var(--dark); margin: 0; }
+
+/* ===========================================
+   BOOKS SECTION - (JANGAN UBAH BAGIAN INI)
+==============================================*/
+.books-outer { margin-bottom: 60px; }
+
+.books-row {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    padding-bottom: 15px; /* Tambah padding agar shadow hover tidak terpotong */
+    scroll-behavior: smooth;
+}
+
+.books-row::-webkit-scrollbar { height: 6px; }
+.books-row::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 20px; }
+
+.book-rec-card {
+    flex: 0 0 210px;
+    width: 210px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    transition: transform .25s ease, box-shadow .25s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.book-rec-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+}
+
+.book-cover-wrap { overflow: hidden; border-radius: 18px 18px 0 0; }
+.book-cover-wrap img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+    transition: transform .4s ease;
+}
+
+.book-rec-card:hover .book-cover-wrap img { transform: scale(1.08); }
+
+.book-info { padding: 14px 16px 18px; }
+.book-title { font-size: 14px; font-weight: 700; color: #1e1e1e; margin-bottom: 4px; line-height: 1.4; }
+.book-author { font-size: 12px; color: #777; }
+
+/* BADGES */
+.badge-category, .badge-stock {
+    position: absolute; top: 12px; font-size: 11px; font-weight: 600; 
+    padding: 5px 12px; border-radius: 30px; z-index: 2;
+}
+.badge-category { left: 12px; background: rgba(0,0,0,0.75); color: #fff; }
+.badge-stock { right: 12px; }
+.stock-low { background: #ffebee; color: #c62828; }
+.stock-ok { background: #e8f5e9; color: #2e7d32; }
+.stock-empty { background: #eeeeee; color: #616161; }
+
+.book-card-link {
+    text-decoration: none; /* Hilangkan garis bawah */
+    color: inherit;       /* Ikuti warna teks aslinya */
+    display: block;       /* Biar seluruh area kartu bisa diklik */
+    transition: all 0.3s ease;
+}
+
+.book-card-link:hover .book-rec-card {
+    transform: translateY(-8px); /* Efek melayang saat di-hover */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.book-card-link:hover .book-title {
+    color: #40487A; /* Opsional: Ubah warna judul saat di-hover */
+}
