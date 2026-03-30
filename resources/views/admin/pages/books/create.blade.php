@@ -51,14 +51,14 @@
                             <div class="col-md-8 mb-4">
                                 <label class="form-label">Judul Buku <span class="text-danger">*</span></label>
                                 <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" 
-                                    placeholder="Masukkan judul lengkap buku" value="{{ old('title') }}" required>
+                                    placeholder="Masukkan judul lengkap buku" value="{{ old('title') }}" >
                                 @error('title') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
 
                             {{-- Category --}}
                             <div class="col-md-4 mb-4">
                                 <label class="form-label">Kategori <span class="text-danger">*</span></label>
-                                <select name="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
+                                <select name="category_id" class="form-select @error('category_id') is-invalid @enderror" >
                                     <option value="">-- Pilih Kategori --</option>
                                     @foreach($categories as $cat)
                                         <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>
@@ -73,7 +73,7 @@
                             <div class="col-md-6 mb-4">
                                 <label class="form-label">Penulis / Pengarang <span class="text-danger">*</span></label>
                                 <input type="text" name="writer" class="form-control @error('writer') is-invalid @enderror" 
-                                    placeholder="Nama penulis" value="{{ old('writer') }}" required>
+                                    placeholder="Nama penulis" value="{{ old('writer') }}">
                                 @error('writer') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
 
@@ -81,7 +81,7 @@
                             <div class="col-md-6 mb-4">
                                 <label class="form-label">Penerbit <span class="text-danger">*</span></label>
                                 <input type="text" name="publisher" class="form-control @error('publisher') is-invalid @enderror" 
-                                    placeholder="Nama penerbit" value="{{ old('publisher') }}" required>
+                                    placeholder="Nama penerbit" value="{{ old('publisher') }}" >
                                 @error('publisher') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
 
@@ -94,7 +94,7 @@
                             <div class="col-md-4 mb-4">
                                 <label class="form-label">Jumlah Stok <span class="text-danger">*</span></label>
                                 <input type="number" name="stock" class="form-control @error('stock') is-invalid @enderror" 
-                                    value="{{ old('stock', 1) }}" min="0" required>
+                                    value="{{ old('stock', 1) }}" min="0" >
                             </div>
                             <div class="col-md-4 mb-4">
                                 <label class="form-label">Bahasa</label>
@@ -106,7 +106,7 @@
                             <div class="col-12 mb-4">
                                 <label class="form-label">Ringkasan / Deskripsi <span class="text-danger">*</span></label>
                                 <textarea name="description" rows="4" class="form-control @error('description') is-invalid @enderror" 
-                                    placeholder="Tuliskan sedikit tentang isi buku..." required>{{ old('description') }}</textarea>
+                                    placeholder="Tuliskan sedikit tentang isi buku..." >{{ old('description') }}</textarea>
                                 @error('description') <small class="text-danger mt-1 d-block">{{ $message }}</small> @enderror
                             </div>
                         </div>
