@@ -6,10 +6,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait Filterable
 {
-    /**
-     * Logic Filter Global
-     * $searchableColumns: kolom yang mau dicari (bisa kolom biasa atau relasi)
-     */
     public function scopeFilter(Builder $query, array $filters, array $searchableColumns = [])
     {
         // 1. Logika Search (Judul, Penulis, atau Nama User)
@@ -30,9 +26,18 @@ trait Filterable
             });
         });
 
-        // 2. Logika Filter Otomatis (category_id, status, dll)
+        // 2. Logika Filter Otomatis & Custom
         foreach ($filters as $key => $value) {
-            if ($key !== 'search' && !empty($value)) {
+            // Lewati jika nilainya kosong atau jika itu keyword 'search' atau 'stock_order'
+            if (empty($value) || in_array($key, ['search', 'stock_order', 'page'])) {
+                continue;
+            }
+
+            if ($key === 'class') {
+                // Khusus 'class', gunakan LIKE agar "12" bisa filter "12 RPL", "12 DKV", dll.
+                $query->where('class', 'like', $value . '%');
+            } else {
+                // Filter lainnya (misal: gender, status, dll) tetap menggunakan '='
                 $query->where($key, $value);
             }
         }
