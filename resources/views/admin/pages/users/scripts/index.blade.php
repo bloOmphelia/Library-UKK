@@ -1,3 +1,23 @@
+ <script>
+    // Enhanced responsive table handling
+    document.addEventListener('DOMContentLoaded', function() {
+        function handleResize() {
+            const width = window.innerWidth;
+            const checkAll = document.getElementById('check-all');
+            
+            if (width <= 480) {
+                // Mobile: adjust checkbox label
+                checkAll.nextElementSibling.textContent = 'SEMUA';
+            } else {
+                checkAll.nextElementSibling.textContent = 'ALL';
+            }
+        }
+        
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Initial call
+    });
+    </script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Logika Modal Detail
