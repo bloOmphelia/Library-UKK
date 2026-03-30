@@ -13,7 +13,6 @@
     description="Kelola koleksi buku perpustakaan."
     category="Manajemen"
     bgColor="#f0ebe2"
-    imgWidth="70px"
 />
 
 <div class="manage-books-page p-3">

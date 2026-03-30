@@ -12,7 +12,6 @@
     description="Daftar transaksi peminjaman buku"
     category="Manajemen"
     bgColor="#f8f9fa"
-    imgWidth="70px"
 />
 
 {{-- Toolbar --}}

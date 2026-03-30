@@ -14,7 +14,6 @@
     description="Jelajahi dan pinjam buku favoritmu di SmartLib."
     category="Perpustakaan"
     bgColor="#f0ebe2"
-    imgWidth="70px"
 />
 
 <div class="main-container manage-books-page">

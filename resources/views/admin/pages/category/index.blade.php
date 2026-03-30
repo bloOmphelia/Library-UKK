@@ -12,7 +12,6 @@
     description="Atur kategori untuk klasifikasi buku"
     category="Manajemen"
     bgColor="#f2f0eb"
-    imgWidth="70px"
 />
 
 <div class="container-fluid p-4">

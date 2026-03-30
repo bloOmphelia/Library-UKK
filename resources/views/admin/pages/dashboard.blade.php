@@ -14,7 +14,6 @@
         description="Kelola data perpustakaan"
         category="Manajemen"
         bgColor="var(--hero-bg)" 
-        imgWidth="70px"
     />
 
     <div class="stats-grid">

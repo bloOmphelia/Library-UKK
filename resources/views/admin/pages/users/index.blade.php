@@ -12,7 +12,6 @@
     description="Kelola informasi anggota perpustakaan"
     category="Manajemen"
     bgColor="var(--hero-bg)" 
-    imgWidth="70px"
 />
 
 <div class="w-100 mb-3">

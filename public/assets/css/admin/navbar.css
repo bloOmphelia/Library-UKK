@@ -1,0 +1,117 @@
+
+   .navbar-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 35px;
+    background: transparent;
+}
+
+/* NAV RIGHT SECTION */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+/* NOTIFICATION */
+.notification-box {
+    position: relative;
+    cursor: pointer;
+    color: #1E293B;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+/* PROFILE SECTION */
+.profile-container {
+    position: relative;
+}
+
+.profile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 12px;
+    transition: background 0.2s;
+}
+
+.profile-trigger img {
+    width: 40px; /* Sesuaikan ukuranmu */
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover; /* Menjaga foto tetap proporsional dalam lingkaran */
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1E293B;
+}
+
+.profile-info i {
+    font-size: 12px;
+    color: #64748B;
+}
+
+/* DROPDOWN MENU */
+.profile-dropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 180px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    display: none; /* Sembunyikan default */
+    padding: 8px;
+    z-index: 1100;
+    border: 1px solid #e7e3d6;
+}
+
+.profile-container:hover .profile-dropdown {
+    display: block;
+}
+
+.profile-dropdown a, 
+.profile-dropdown .logout-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    text-decoration: none;
+    color: #8b8564;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    width: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.profile-dropdown a:hover {
+    background: #fcfbf8;
+    color: #7b7a78;
+}
+
+.profile-dropdown .logout-link:hover {
+    background: #FFF1F2;
+    color: #E11D48;
+}
+
+.profile-dropdown hr {
+    margin: 8px 0;
+    border: none;
+    border-top: 1px solid #f9f7f1;
+}

@@ -1,0 +1,271 @@
+.navbar-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 35px;
+    background: transparent;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+/* NAV RIGHT SECTION */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+/* NOTIFICATION - FIX HOVER */
+.notification-box {
+    position: relative;
+    cursor: pointer;
+    color: #1E293B;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+/* FIX: Hover area lebih luas */
+.notification-box:hover {
+    color: #ad9a79;
+}
+
+/* PROFILE - FIX HOVER PALING PENTING */
+.profile-container {
+    position: relative;
+}
+
+.profile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    padding: 8px 12px; /* TAMBah PADDING */
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    /* FIX: Background saat hover */
+}
+
+.profile-trigger:hover {
+    background: #f8f9fa; /* LATAR BELAKANG LEMBUT */
+}
+
+/* DROPDOWN - FIX Z-INDEX & HOVER */
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 8px); /* Jarak dari trigger */
+    right: 0;
+    width: 200px; /* LEBIH LEBAR */
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.12); /* SHADOW LEBIH TEBAL */
+    border: 1px solid #e2e8f0; /* BORDER LEBIH KENTJANG */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 8px 0; /* HAPUS padding horizontal */
+    z-index: 1200; /* LEBIH TINGGI */
+    min-width: 200px;
+}
+
+/* FIX: Hover parent + child */
+.profile-container:hover .profile-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* NOTIF DROPDOWN - FIX SAMA */
+.notif-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 340px;
+    max-width: 90vw; /* RESPONSIVE MOBILE */
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+    border: 1px solid #e2e8f0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 16px;
+    z-index: 1200;
+}
+
+.notification-box:hover .notif-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Profile dropdown items */
+.profile-dropdown a, 
+.profile-dropdown .logout-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px; /* SAMAKAN SPACING */
+    text-decoration: none;
+    color: #64748b; /* SAMAKAN WARNA SIDEBAR */
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    width: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.profile-dropdown a:hover {
+    background: #f1f5f9; /* SAMAKAN SIDEBAR HOVER */
+    color: #1e293b;
+    padding-left: 20px; /* EFEK GESER HALUS */
+}
+
+.profile-dropdown .logout-link:hover {
+    background: #fef2f2; /* SAMAKAN SIDEBAR LOGOUT */
+    color: #dc2626;
+    padding-left: 20px;
+}
+
+.profile-dropdown hr {
+    margin: 4px 16px;
+    border: none;
+    border-top: 1px solid #f1f5f9; /* SAMAKAN */
+}
+
+/* Profile images */
+.profile-trigger img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.profile-trigger:hover img {
+    border-color: #ad9a79; /* RING TIPIS */
+    transform: scale(1.05);
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1e293b; /* SAMAKAN */
+}
+
+.profile-info i {
+    font-size: 12px;
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+}
+
+.profile-trigger:hover .profile-info i {
+    transform: rotate(180deg); /* CHEVRON TURUN */
+}
+
+/* Badge */
+.badge-notif {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background: #ef4444;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+    border: 2px solid white;
+    min-width: 18px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+/* Notif items */
+.notif-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.notif-header h6 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 14px;
+    color: #1e293b;
+}
+
+.notif-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1e293b;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f8fafc;
+    margin-bottom: 4px;
+}
+
+.notif-item:hover {
+    background: #f1f5f9; /* SAMAKAN */
+    transform: translateX(4px);
+}
+
+.notif-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.notif-item i {
+    font-size: 18px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.notif-content p {
+    margin: 0 0 4px 0;
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.notif-content small {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .nav-right {
+        gap: 15px;
+    }
+    
+    .profile-dropdown,
+    .notif-dropdown {
+        right: -10px;
+        width: 280px;
+        max-width: calc(100vw - 40px);
+    }
+    
+    .notif-dropdown {
+        width: 300px;
+    }
+}

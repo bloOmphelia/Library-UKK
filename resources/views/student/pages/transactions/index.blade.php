@@ -15,7 +15,6 @@
         description="Pantau status peminjaman dan riwayat buku kamu di sini."
         category="Aktivitas"
         bgColor="#f8f9fa"
-        imgWidth="70px"
     />
 
     <div class="container-fluid px-0">
