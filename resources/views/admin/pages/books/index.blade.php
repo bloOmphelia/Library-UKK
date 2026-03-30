@@ -2,195 +2,157 @@
 
 @section('title', 'Manajemen Buku')
 
-<style>
-.manage-books-page {
-    min-height: 100vh;
-    padding: 30px;
-}
-
-/* GRID */
-.books-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 20px;
-}
-
-/* CARD UTAMA */
-.book-card {
-    position: relative;
-    width: 180px;
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-/* GAMBAR COVER */
-.book-cover {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-/* OVERLAY (fade in seperti React) */
-.book-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.80);
-    color: white;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-/* Saat hover */
-.book-card:hover .book-overlay {
-    opacity: 1;
-}
-
-/* TAG */
-.book-tag {
-    font-size: 11px;
-}
-
-/* ACTION BUTTONS (BARU) */
-.book-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 8px;
-    gap: 6px;
-}
-
-.btn-edit {
-    background: #f1c40f;
-    color: #000;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 12px;
-    text-decoration: none;
-    text-align: center;
-    flex: 1;
-}
-
-.btn-edit:hover {
-    background: #d4ac0d;
-}
-
-.btn-delete {
-    background: #e74c3c;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 12px;
-    border: none;
-    cursor: pointer;
-    flex: 1;
-}
-
-.btn-delete:hover {
-    background: #c0392b;
-}
-
-.create-card {
-    border: 2px dashed #ccc;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 260px;
-    text-decoration: none;
-    color: #888;
-    border-radius: 8px;
-    gap: 6px;
-}
-
-.create-card:hover {
-    background: #f1f1f1;
-}
-
-</style>
+@push('styles')
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('assets/css/admin/books/index.css') }}">
+@endpush
 
 @section('content')
-<div class="card position-relative overflow-hidden" style="background-color: #E8DEF3;">
-    <div class="card-body px-4 py-4">
-        <div class="row align-items-center">
-            <div class="col-9">
-                @include('components.breadcrumb', [
-                    'title' => 'Daftar Buku',
-                    'description' => 'Tambahkan dan Perbarui Buku'
-                ])
+<x-breadcrumb
+    title="Koleksi Buku"
+    description="Kelola koleksi buku perpustakaan."
+    category="Manajemen"
+    bgColor="#f0ebe2"
+    imgWidth="70px"
+/>
+
+<div class="manage-books-page p-3">
+    <x-search-filter :action="url()->current()" placeholder="Cari buku...">
+        <div class="filter-bar-inner d-flex align-items-center gap-3 w-100 justify-content-end">
+
+            <div class="sort-group d-flex align-items-center gap-2">
+                <label class="mb-0 text-nowrap" style="font-size:14px; font-weight:600; color:#6b7280;">Sort by:</label>
+                <select name="stock_order" class="form-select modern-input auto-submit"
+                    style="height:45px; min-width:170px; border-radius:12px; font-size:14px; border:1px solid #e5e7eb;">
+                    <option value="">Default</option>
+                    <option value="highest" {{ request('stock_order') == 'highest' ? 'selected' : '' }}>Stok Terbanyak</option>
+                    <option value="lowest"  {{ request('stock_order') == 'lowest'  ? 'selected' : '' }}>Stok Terendah</option>
+                </select>
             </div>
-            <div class="col-3 text-center mb-n1">
-                <img src="{{ asset('assets/users/admin/dist/images/backgrounds/track-bg.png') }}" 
-                     width="70px" alt="" class="img-fluid mb-n3" />
-            </div>
+
+            <a href="{{ route('admin.books.create') }}"
+               class="btn-tambah btn btn-dark d-flex align-items-center justify-content-center gap-2 text-nowrap"
+               style="height:45px; padding:0 20px; border-radius:12px; font-size:14px; font-weight:700;">
+                <i class="bi bi-plus-lg" style="font-size:18px;"></i>
+                Tambah Buku
+            </a>
         </div>
-    </div>
-</div>
+    </x-search-filter>
 
-<div class="manage-books-page">
-    <x-search-filter :action="url()->current()" placeholder="Cari..."></x-search-filter>
+    @if($books->count() > 0)
+        <div class="books-grid">
+            @foreach($books as $book)
+                @php
+                    $stock       = $book->stock ?? 0;
+                    $title       = $book->title  ?? '-';
+                    $author      = $book->writer ?? '-';
+                    $category    = $book->category->name ?? '-';
+                    $activeLoans = $book->transaction->whereIn('status', ['pending','borrowed'])->count();
+                    $deleteRoute = route('admin.books.destroy', $book->id);
+                    $editRoute   = route('admin.books.edit', $book->id);
+                    $showRoute   = route('admin.books.show', $book->id);
+                @endphp
 
-    <div class="books-grid">
+                <a href="{{ $showRoute }}"
+                   class="book-rec-card {{ $book->status === 'archived' ? 'is-archived' : '' }}">
 
-        @foreach($books as $book)
-        <div class="book-card">
+                    {{-- Badges --}}
+                    <div class="badge-category">{{ $category }}</div>
+                    <div class="badge-stock {{ $stock == 0 ? 'stock-empty' : ($stock <= 3 ? 'stock-low' : 'stock-ok') }}">
+                        {{ $stock == 0 ? 'Habis' : ($stock <= 3 ? "Sisa $stock" : 'Tersedia') }}
+                    </div>
 
-            <!-- COVER -->
-            <img 
-                src="{{ $book->cover ? asset('storage/' . $book->cover) : 'https://via.placeholder.com/180x260' }}" 
-                class="book-cover"
-                alt="{{ $book->title }}"
-            >
+                    {{-- Cover --}}
+                    <div class="book-cover-wrap">
+                        @if($book->cover)
+                            <img src="{{ asset('storage/' . $book->cover) }}" alt="{{ $title }}" loading="lazy">
+                        @else
+                            <div class="book-cover-fallback">
+                                <i class="bi bi-book-half"></i>
+                                <span>{{ $title }}</span>
+                            </div>
+                        @endif
+                    </div>
 
-            <!-- OVERLAY (muncul saat hover) -->
-            <div class="book-overlay">
-                <div>
-                    <h4 style="font-size:13px; font-weight:600; margin-bottom:4px;">
-                        {{ $book->title }}
-                    </h4>
-                    <p style="font-size:12px;">
-                        {{ Str::limit($book->description, 120) }}
-                    </p>
-                </div>
+                    {{-- Info --}}
+                    <div class="book-info">
+                        <div class="book-title-row">
+                            <div class="book-title">{{ Str::limit($title, 40) }}</div>
+                        </div>
+                        <div class="book-author">{{ Str::limit($author, 30) }}</div>
+                    </div>
 
-                <div style="display:flex; gap:5px; flex-wrap:wrap; margin-top:6px;">
-                    <span class="book-tag">
-                        {{ $book->category->name ?? 'Unknown' }}
-                    </span>
-                    <span class="book-tag">
-                        Stok : {{ $book->stock }}
-                    </span>
-                </div>
+                    {{-- Actions --}}
+                    <div class="book-actions">
+                      
+                        <form id="status-form-{{ $book->id }}"
+                              action="{{ route('admin.books.updateStatus', $book->id) }}"
+                              method="POST" style="display:none;">
+                            @csrf @method('PATCH')
+                        </form>
 
-                <!-- 🔥 BUTTON EDIT & DELETE (BARU) -->
-                <div class="book-actions">
-                    <a href="{{ route('admin.books.edit', $book->id) }}" class="btn-edit">
-                        Edit
-                    </a>
+                        @if($book->status === 'published')
+                           
+                            <button type="button"
+                                class="btn btn-light border d-flex align-items-center justify-content-center gap-2 w-100"
+                                style="height:40px; border-radius:10px; font-weight:700; font-size:13px;"
+                                onclick="event.preventDefault(); event.stopPropagation(); confirmStatus('{{ $book->id }}', 'published', {{ $activeLoans }})">
+                                <i class="bi bi-archive-fill"></i>
+                                <span>Tarik ke Draft</span>
+                            </button>
+                        @else
+                            {{-- Terbitkan --}}
+                            <button type="button"
+                                class="btn btn-success d-flex align-items-center justify-content-center gap-2 flex-grow-1"
+                                style="height:40px; border-radius:10px; font-weight:700; font-size:13px;"
+                                onclick="event.preventDefault(); event.stopPropagation(); confirmStatus('{{ $book->id }}', '{{ $book->status }}', 0)">
+                                <i class="bi bi-megaphone-fill"></i>
+                                <span>Terbitkan</span>
+                            </button>
 
-                    <form action="{{ route('admin.books.destroy', $book->id) }}" method="POST" style="flex:1;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn-delete">
-                            Hapus
-                        </button>
-                    </form>
-                </div>
-            </div>
+                            <button type="button"
+                                class="btn btn-warning text-white d-flex align-items-center justify-content-center"
+                                style="width:40px; height:40px; border-radius:10px;"
+                                onclick="event.preventDefault(); event.stopPropagation(); window.location.href='{{ $editRoute }}';">
+                                <i class="bi bi-pencil-square text-white"></i>
+                            </button>
 
+                            <button type="button"
+                                class="btn btn-danger d-flex align-items-center justify-content-center"
+                                style="width:40px; height:40px; border-radius:10px;"
+                                onclick="event.preventDefault(); event.stopPropagation(); confirmDelete('{{ $deleteRoute }}', '{{ addslashes($title) }}')">
+                                <i class="bi bi-trash3-fill"></i>
+                            </button>
+                        @endif
+                    </div>
+                </a>
+            @endforeach
         </div>
-        @endforeach
 
-        <!-- CARD TAMBAH -->
-        <a href="{{ route('admin.books.create') }}" class="create-card">
-            <i class="bi bi-plus-circle" style="font-size:32px; margin-bottom:8px;"></i>
-            <strong>Add New Book</strong>
-        </a>
+    @elseif(request('search') || request('stock_order'))
+        <div class="empty-state-container">
+            <x-empty-state
+                :as-tr="false"
+                icon="bi-search"
+                message="Hasil pencarian '{{ request('search') }}' tidak ditemukan."
+            />
+        </div>
+    @else
+        <div class="empty-state-container">
+            <x-empty-state
+                :as-tr="false"
+                icon="bi-book"
+                message="Koleksi buku masih kosong."
+            />
+        </div>
+    @endif
 
+    <div class="mt-4">
+        <x-paginate :paginator="$books" />
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    @include('admin.pages.books.scripts.index')
+@endpush
