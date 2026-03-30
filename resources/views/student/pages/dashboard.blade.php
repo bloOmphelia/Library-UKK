@@ -64,7 +64,7 @@
 
                         <div class="book-info">
                             <div class="book-title">{{ Str::limit($book->title, 35) }}</div>
-                            <div class="book-author">{{ $book->writer ?? 'Anonim' }}</div> {{-- Pastikan pakai 'writer' sesuai field DB kamu --}}
+                            <div class="book-author">{{ $book->writer ?? 'Anonim' }}</div>
                         </div>
                     </div>
                 </a>
