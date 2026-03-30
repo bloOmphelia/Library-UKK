@@ -1,0 +1,268 @@
+    .detail-wrap {
+        font-family: 'DM Sans', sans-serif;
+        min-height: 100vh;
+        padding: 40px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Main Grid */
+    .detail-grid {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 50px;
+        animation: fadeUp 0.6s ease-out;
+        align-items: start;
+    }
+
+    /* Cover */
+    .cover-wrap {
+        width: 100%;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-hover);
+        border: 8px solid #ffffff;
+        aspect-ratio: 2 / 3;
+        background: #f0ebe2;
+    }
+
+    .cover-wrap img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: contain;
+        background: #f8f8f8;
+    }
+
+    .cover-fallback {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--dark), #5a6490);
+        color: white;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .cover-fallback h5 {
+        font-family: 'Fraunces', serif;
+        font-size: 16px;
+        line-height: 1.4;
+        margin: 0;
+    }
+
+    /* Stock Badge */
+    .stock-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 16px;
+        padding: 12px;
+        border-radius: 12px;
+        background: #ffffff;
+        font-weight: 700;
+        font-size: 14px;
+        justify-content: center;
+        box-shadow: var(--shadow);
+    }
+    .stock-badge.available { color: #2d7a3a; }
+    .stock-badge.empty     { color: #c0392b; }
+    .stock-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+    /* Category badge */
+    .book-category {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--accent);
+        background: rgba(173, 154, 121, 0.15);
+        padding: 6px 16px;
+        border-radius: 50px;
+        margin-bottom: 15px;
+    }
+
+    /* Typography */
+    .book-title {
+        font-family: 'Fraunces', serif;
+        font-size: 36px;
+        font-weight: 900;
+        color: var(--dark);
+        margin-bottom: 10px;
+        line-height: 1.15;
+    }
+
+    .book-writer { font-size: 17px; color: var(--muted); margin-bottom: 30px; }
+    .book-writer strong { color: var(--accent); }
+
+    /* Meta Cards */
+    .meta-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+
+    .meta-item {
+        background: #ffffff;
+        padding: 18px;
+        border-radius: 16px;
+        border: 1px solid rgba(0,0,0,0.04);
+        box-shadow: var(--shadow);
+    }
+
+    .meta-label {
+        font-size: 10px;
+        font-weight: 800;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 6px;
+    }
+
+    .meta-value {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--dark);
+        margin: 0;
+    }
+
+    /* Description */
+    .desc-section {
+        background: #ffffff;
+        padding: 28px;
+        border-radius: var(--radius);
+        margin-top: 24px;
+        box-shadow: var(--shadow);
+    }
+
+    .desc-section h4 {
+        font-family: 'Fraunces', serif;
+        font-weight: 800;
+        color: var(--dark);
+        margin-bottom: 14px;
+        font-size: 18px;
+    }
+
+    .desc-text {
+        line-height: 1.85;
+        color: #5a5a5a;
+        font-size: 15px;
+        margin: 0;
+    }
+
+    .desc-text.clamped {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Action Buttons */
+    .action-row {
+        display: flex;
+        gap: 12px;
+        margin-top: 28px;
+        flex-wrap: wrap;
+    }
+
+    .btn-edit-book {
+        flex: 1;
+        min-width: 140px;
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 14px;
+        padding: 16px;
+        font-weight: 700;
+        font-size: 15px;
+        text-align: center;
+        text-decoration: none;
+        transition: 0.3s;
+        box-shadow: 0 8px 20px rgba(173, 154, 121, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn-edit-book:hover {
+        background: #8e7d5f;
+        transform: translateY(-3px);
+        color: white;
+    }
+
+    .btn-back-book {
+        background: #f0ebe2;
+        color: var(--dark);
+        border: none;
+        border-radius: 14px;
+        padding: 16px 24px;
+        font-weight: 700;
+        font-size: 15px;
+        text-align: center;
+        text-decoration: none;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn-back-book:hover {
+        background: #e0d8cc;
+        color: var(--dark);
+        transform: translateY(-3px);
+    }
+
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 992px) {
+        .detail-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .cover-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cover-wrap {
+            max-width: 240px;
+            width: 100%;
+        }
+
+        .stock-badge {
+            max-width: 240px;
+            width: 100%;
+        }
+
+        .book-title { font-size: 28px; }
+    }
+
+    @media (max-width: 640px) {
+        .detail-wrap { padding: 24px 16px; }
+
+        .meta-grid { grid-template-columns: repeat(2, 1fr); }
+
+        .book-title { font-size: 24px; }
+        .book-writer { font-size: 15px; }
+
+        .desc-section { padding: 20px; }
+
+        .action-row { flex-direction: column; }
+        .btn-edit-book,
+        .btn-back-book { width: 100%; }
+    }
+
+    @media (max-width: 400px) {
+        .meta-grid { grid-template-columns: 1fr; }
+    }
