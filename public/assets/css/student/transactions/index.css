@@ -1,0 +1,180 @@
+    .transaction-page {
+        font-family: 'DM Sans', sans-serif;
+        color: var(--dark);
+    }
+
+    /* ── Tab Styling ── */
+    .nav-tabs {
+        border-bottom: 2px solid #eee;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 24px;
+    }
+
+    .nav-tabs .nav-link {
+        border: none;
+        color: var(--muted);
+        font-weight: 600;
+        padding: 12px 20px;
+        border-radius: 12px 12px 0 0;
+        transition: all 0.3s;
+        font-size: 15px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .nav-tabs .nav-link i {
+        font-size: 18px;
+    }
+
+    .nav-tabs .nav-link:hover {
+        color: var(--dark);
+        background: #f8f9fa;
+    }
+
+    .nav-tabs .nav-link.active {
+        color: var(--dark);
+        background: transparent;
+        border: none;
+    }
+
+    .nav-tabs .nav-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: var(--dark);
+        border-radius: 3px;
+    }
+
+    /* ── Tab Content Container ── */
+    .tab-content {
+        padding-top: 20px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* ── DEFAULT 5 KOLOM + FULL RESPONSIVE ── */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    /* DEFAULT - 5 kolom SEMUA grid */
+    .borrow-grid,
+    .history-grid,
+    .pending-grid {
+        display: grid !important;
+        grid-template-columns: repeat(5, 1fr) !important;
+        gap: 16px !important;
+        margin-top: 16px !important;
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    /* ── RESPONSIVE - Mulai berubah dari sini ke bawah ── */
+
+    /* XXL Desktop (≥1400px) - Tetap 5 kolom */
+    @media (min-width: 1400px) {
+        .borrow-grid,
+        .history-grid,
+        .pending-grid { 
+            grid-template-columns: repeat(5, 1fr) !important; 
+            gap: 20px !important; 
+        }
+    }
+
+    /* XL Desktop/Laptop Besar (1200px - 1399px) - 4 kolom */
+    @media (min-width: 1200px) and (max-width: 1399px) {
+        .borrow-grid,
+        .history-grid,
+        .pending-grid { 
+            grid-template-columns: repeat(4, 1fr) !important; 
+            gap: 18px !important; 
+        }
+    }
+
+    /* LG Laptop (992px - 1199px) - 3 kolom */
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .borrow-grid,
+        .history-grid,
+        .pending-grid { 
+            grid-template-columns: repeat(3, 1fr) !important; 
+            gap: 16px !important; 
+        }
+    }
+
+    /* MD Tablet (768px - 991px) - 2 kolom */
+    @media (min-width: 768px) and (max-width: 991px) {
+        .borrow-grid,
+        .history-grid,
+        .pending-grid { 
+            grid-template-columns: repeat(2, 1fr) !important; 
+            gap: 14px !important; 
+        }
+    }
+
+    /* SM Mobile Landscape (576px - 767px) - 2 kolom borrow, 1 lainnya */
+    @media (min-width: 576px) and (max-width: 767px) {
+        .borrow-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+        .history-grid, .pending-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+    }
+
+    /* XS Mobile Portrait (<576px) - 1 kolom semua */
+    @media (max-width: 575px) {
+        .borrow-grid,
+        .history-grid,
+        .pending-grid { 
+            grid-template-columns: 1fr !important; 
+            gap: 12px !important;
+            margin-left: -12px !important;
+            margin-right: -12px !important;
+            padding: 0 12px !important;
+        }
+    }
+
+    /* Extra Small Mobile (<480px) */
+    @media (max-width: 480px) {
+        .borrow-grid,
+        .history-grid,
+        .pending-grid { gap: 10px !important; }
+        
+        /* Disable hover di mobile */
+        .borrow-card:hover,
+        .history-card:hover,
+        .pending-card:hover {
+            transform: none !important;
+        }
+    }
+
+    /* Responsive tabs */
+    @media (max-width: 768px) {
+        .nav-tabs { 
+            flex-direction: column; 
+            gap: 6px; 
+            align-items: center;
+        }
+        .nav-tabs .nav-link { 
+            justify-content: center; 
+            padding: 12px 16px; 
+            width: 280px;
+            font-size: 14px;
+        }
+        .nav-tabs .nav-link i { font-size: 16px; }
+    }
+
+    @media (max-width: 575px) {
+        .nav-tabs .nav-link { 
+            width: 100%; 
+            padding: 10px 12px; 
+            font-size: 13px;
+        }
+        .container-fluid { padding-left: 12px !important; padding-right: 12px !important; }
+    }
+
+    /* Full width container fix */
+    .container-fluid {
+        max-width: none !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }

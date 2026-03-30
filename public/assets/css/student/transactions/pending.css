@@ -1,0 +1,104 @@
+    .pending-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); /* SAMAKAN DENGAN BORROW */
+        gap: 16px; /* SAMAKAN */
+        margin-top: 16px; /* SAMAKAN */
+    }
+
+    .pending-card {
+        background: #fff;
+        border-radius: 16px; /* SAMAKAN borrow-card */
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08); /* SAMAKAN */
+        overflow: hidden;
+        border: 1px solid #f0f0f0;
+        transition: transform 0.3s ease; /* TAMBAHAN hover */
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .pending-card:hover {
+        transform: translateY(-4px); /* TAMBAHAN hover SAMAKAN */
+    }
+
+    .pending-cover {
+        position: relative; /* SAMAKAN borrow-cover */
+        width: 100%;
+        aspect-ratio: 3/4;
+        background: #eee; /* SAMAKAN */
+        overflow: hidden;
+    }
+
+    .pending-cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Animasi Pulse untuk status menunggu - POSISI DIKECILKAN */
+    .status-pending-badge {
+        position: absolute;
+        top: 10px; /* SAMAKAN day-badge */
+        left: 10px; /* DIKECILKAN */
+        background: #FFF9E6;
+        color: #B28900;
+        border: 1px solid #FFE58F;
+        padding: 4px 10px; /* SAMAKAN day-badge */
+        border-radius: 20px; /* SAMAKAN */
+        font-size: 9px; /* SAMAKAN */
+        font-weight: 700;
+        text-transform: uppercase;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.1); /* TAMBAHAN shadow */
+    }
+
+    .pulse-dot {
+        width: 6px;
+        height: 6px;
+        background-color: #B28900;
+        border-radius: 50%;
+        animation: pulse-animation 1.5s infinite;
+    }
+
+    @keyframes pulse-animation {
+        0% { transform: scale(0.95); opacity: 1; }
+        50% { transform: scale(1.5); opacity: 0.5; }
+        100% { transform: scale(0.95); opacity: 1; }
+    }
+
+    .pending-info {
+        padding: 14px; /* SAMAKAN borrow-info */
+        flex-grow: 1;
+    }
+
+    .pending-title {
+        font-size: 14px; /* SAMAKAN borrow-title */
+        font-weight: 700;
+        color: #1e1e1e;
+        margin-bottom: 3px; /* SAMAKAN */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 38px; /* SAMAKAN */
+    }
+
+    .pending-author {
+        font-size: 11px; /* SAMAKAN borrow-meta */
+        color: #8e8e8e;
+        margin-bottom: 10px; /* SAMAKAN */
+    }
+
+    .pending-notice {
+        font-size: 10px; /* SAMAKAN warning-archived-text */
+        color: #666; /* DIUBAH */
+        background: #f8f9fa; /* DIUBAH ke borrow style */
+        padding: 6px 8px; /* SAMAKAN */
+        border-radius: 8px; /* SAMAKAN */
+        margin-bottom: 10px; /* SAMAKAN */
+        border-left: 2px solid #B28900; /* SAMAKAN style warning */
+        display: block;
+    }

@@ -1,0 +1,138 @@
+
+    .borrow-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); /* FIXED 5 PER BARIS */
+        gap: 16px;
+        margin-top: 16px;
+    }
+
+    .borrow-card {
+        background: #fff;
+        border-radius: 16px; /* Dikecilkan dari 18px */
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08); /* Dikecilkan */
+        overflow: hidden;
+        border: 1px solid #f0f0f0;
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .borrow-card:hover {
+        transform: translateY(-4px); /* Dikecilkan dari -5px */
+    }
+
+    .borrow-cover {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 3/4;
+        background: #eee;
+        overflow: hidden;
+    }
+
+    .borrow-cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* ── Placeholder Khusus Arsip ── */
+    .archived-overlay-placeholder {
+        width: 100%;
+        height: 100%;
+        background: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 16px; /* Dikecilkan dari 20px */
+        text-align: center;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .archived-overlay-placeholder i {
+        font-size: 36px; /* Dikecilkan dari 42px */
+        color: #dee2e6;
+        margin-bottom: 8px; /* Dikecilkan */
+    }
+    .archived-overlay-placeholder span {
+        font-size: 10px; /* Dikecilkan dari 11px */
+        font-weight: 700;
+        color: #adb5bd;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .day-badge {
+        position: absolute;
+        top: 10px; /* Dikecilkan dari 12px */
+        right: 10px; /* Dikecilkan dari 12px */
+        padding: 4px 10px; /* Dikecilkan */
+        border-radius: 20px; /* Dikecilkan dari 30px */
+        font-size: 9px; /* Dikecilkan dari 10px */
+        font-weight: 700;
+        text-transform: uppercase;
+        z-index: 2;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.1); /* Dikecilkan */
+    }
+
+    .badge-urgent { background: #ffebee; color: #c62828; }
+    .badge-normal { background: #e8f5e9; color: #2e7d32; }
+
+    .borrow-info {
+        padding: 14px; /* Dikecilkan dari 18px */
+        flex-grow: 1;
+    }
+
+    .borrow-title {
+        font-size: 14px; /* Dikecilkan dari 15px */
+        font-weight: 700;
+        color: #1e1e1e;
+        margin-bottom: 3px; /* Dikecilkan */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 38px; /* Dikecilkan */
+    }
+
+    .borrow-meta {
+        font-size: 11px; /* Dikecilkan dari 12px */
+        color: #8e8e8e;
+        margin-bottom: 10px; /* Dikecilkan dari 12px */
+    }
+
+    .warning-archived-text {
+        font-size: 10px; /* Dikecilkan dari 11px */
+        color: #c62828;
+        background: #fff5f5;
+        padding: 6px 8px; /* Dikecilkan */
+        border-radius: 8px; /* Dikecilkan dari 10px */
+        margin-bottom: 10px; /* Dikecilkan */
+        display: block;
+        border-left: 2px solid #c62828; /* Dikecilkan dari 3px */
+    }
+
+    .date-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px; /* Dikecilkan dari 11px */
+        padding-top: 8px; /* Dikecilkan dari 10px */
+        border-top: 1px solid #f5f5f5;
+    }
+
+    .btn-return {
+        background-color: #1e1e1e;
+        color: white;
+        border: none;
+        padding: 10px; /* Dikecilkan dari 12px */
+        font-size: 12px; /* Dikecilkan dari 13px */
+        font-weight: 600;
+        border-radius: 0 0 16px 16px; /* Dikecilkan */
+        transition: background 0.2s;
+        width: 100%;
+    }
+
+    .btn-return:hover {
+        background-color: #ad9a79;
+        color: white;
+    }

@@ -1,0 +1,131 @@
+    .history-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); /* SAMAKAN borrow-grid */
+        gap: 16px; /* SAMAKAN */
+        margin-top: 16px; /* SAMAKAN */
+    }
+
+    .history-card {
+        background: #fff;
+        border-radius: 16px; /* SAMAKAN borrow-card */
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08); /* SAMAKAN */
+        overflow: hidden;
+        border: 1px solid #f0f0f0;
+        transition: transform 0.3s ease; /* SAMAKAN */
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .history-card:hover {
+        transform: translateY(-4px); /* SAMAKAN borrow-card */
+    }
+
+    /* Cover SAMAKAN borrow-cover */
+    .history-cover {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 3/4;
+        background: #eee; /* SAMAKAN */
+        overflow: hidden;
+    }
+
+    .history-cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* HAPUS efek muted - biar sama dengan borrow */
+        /* opacity: 0.85; */
+        /* filter: grayscale(20%); */
+    }
+
+    /* Status Badge SAMAKAN day-badge */
+    .status-badge {
+        position: absolute;
+        top: 10px; /* SAMAKAN */
+        left: 10px; /* DIKECILKAN dari 12px */
+        padding: 4px 10px; /* SAMAKAN */
+        border-radius: 20px; /* SAMAKAN */
+        font-size: 9px; /* SAMAKAN */
+        font-weight: 700;
+        text-transform: uppercase;
+        z-index: 2;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.1); /* SAMAKAN */
+        border: none; /* HAPUS border transparan */
+    }
+
+    .status-returned { background: #e8f5e9; color: #2e7d32; }
+    .status-late     { background: #ffebee; color: #c62828; } /* SAMAKAN badge-urgent */
+    .status-rejected { background: #f5f5f5; color: #8e8e8e; }
+
+    .history-info {
+        padding: 14px; /* SAMAKAN borrow-info */
+        flex-grow: 1;
+    }
+
+    .history-title {
+        font-size: 14px; /* SUDAH SAMA */
+        font-weight: 700;
+        color: #1e1e1e;
+        margin-bottom: 3px; /* SAMAKAN borrow-title */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 38px; /* TAMBAHAN SAMAKAN */
+    }
+
+    .history-author {
+        font-size: 11px; /* SAMAKAN borrow-meta */
+        color: #8e8e8e;
+        margin-bottom: 10px; /* SAMAKAN */
+    }
+
+    /* Reject box SAMAKAN warning-archived-text */
+    .reject-box {
+        font-size: 10px;
+        color: #c62828;
+        background: #fff5f5; /* SAMAKAN */
+        padding: 6px 8px; /* SAMAKAN */
+        border-radius: 8px; /* SAMAKAN */
+        margin-bottom: 10px; /* SAMAKAN */
+        border-left: 2px solid #c62828; /* SAMAKAN */
+        display: block;
+    }
+
+    .reject-label {
+        font-size: 10px;
+        font-weight: 700; /* DIKECILKAN dari 800 */
+        color: #c62828;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+        display: block;
+    }
+
+    .reject-text {
+        font-size: 11px;
+        color: #666;
+        line-height: 1.4;
+        margin-top: 2px;
+    }
+
+    /* Footer SAMAKAN date-row style */
+    .history-footer {
+        padding: 8px 14px; /* SAMAKAN borrow-info */
+        border-top: 1px solid #f5f5f5; /* SAMAKAN */
+        font-size: 10px; /* SAMAKAN date-row */
+    }
+
+    .history-footer .d-flex {
+        justify-content: space-between; /* SAMAKAN */
+        gap: 8px;
+    }
+
+    .history-footer span {
+        font-size: 10px;
+    }
+
+    .history-footer strong {
+        font-weight: 700;
+        color: #1e1e1e;
+    }
