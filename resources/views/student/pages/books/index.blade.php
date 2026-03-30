@@ -1,178 +1,78 @@
 @extends('student.layouts.app')
 
-@section('title', 'Books')
+@section('title', 'Koleksi Buku - SmartLib')
 
-<style>
-/* PAGE */
-.manage-books-page {
-    min-height: 100vh;
-    padding: 30px;
-    color: #fff;
-}
-
-/* HEADER */
-.manage-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 30px;
-}
-
-.manage-header h2 {
-    font-size: 32px;
-    font-weight: 700;
-    color: #000;
-}
-
-/* GRID */
-.books-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-/* CARD */
-.book-card {
-    background: rgba(255,255,255,0.06);
-    border-radius: 16px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-/* TOP */
-.book-top {
-    display: flex;
-    gap: 12px;
-}
-
-.book-cover {
-    width: 60px;
-    height: 80px;
-    border-radius: 8px;
-    object-fit: cover;
-    background: #1f2933;
-}
-
-.book-info h5 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 700;
-    color: #000;
-}
-
-.book-info p {
-    margin: 0;
-    font-size: 13px;
-    color: #cbd5f5;
-}
-
-.book-stock {
-    font-size: 13px;
-    color: #a5b4fc;
-}
-
-/* ACTIONS */
-.book-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.btn-borrow {
-    background: #3b82f6;
-    border: none;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
-}
-
-.btn-borrow:hover {
-    background: #2563eb;
-}
-
-.btn-borrow:disabled {
-    background: #4b5563;
-    cursor: not-allowed;
-}
-</style>
+@push('styles')
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('assets/css/student/books/index.css') }}">
+@endpush
 
 @section('content')
-<div class="manage-books-page">
 
-    <div class="manage-header">
-        <h2>List Books</h2>
-    </div>
+<x-breadcrumb
+    title="Koleksi Buku"
+    description="Jelajahi dan pinjam buku favoritmu di SmartLib."
+    category="Perpustakaan"
+    bgColor="#f0ebe2"
+    imgWidth="70px"
+/>
 
-    <x-search-filter :action="url()->current()" placeholder="Cari..."></x-search-filter>
+<div class="main-container manage-books-page">
+    <x-search-filter :action="url()->current()" placeholder="Cari buku...">
+        <div class="filter-bar-inner d-flex align-items-center gap-3 w-100 justify-content-end">
 
-    @if (session('success'))
-        <div style="background:#10b981; color:white; padding:12px; border-radius:8px; margin-bottom:20px;">
-            {{ session('success') }}
+            <div class="sort-group d-flex align-items-center gap-2">
+                <label class="mb-0 text-nowrap" style="font-size:14px; font-weight:600; color:#6b7280;">Sort by:</label>
+                <select name="stock_order" class="form-select modern-input auto-submit"
+                    style="height:45px; min-width:170px; border-radius:12px; font-size:14px; border:1px solid #e5e7eb;">
+                    <option value="">Default</option>
+                    <option value="highest" {{ request('stock_order') == 'highest' ? 'selected' : '' }}>Stok Terbanyak</option>
+                    <option value="lowest"  {{ request('stock_order') == 'lowest'  ? 'selected' : '' }}>Stok Terendah</option>
+                </select>
+            </div>
         </div>
-    @endif
-
-    @if (session('error'))
-        <div style="background:#ef4444; color:white; padding:12px; border-radius:8px; margin-bottom:20px;">
-            {{ session('error') }}
-        </div>
-    @endif
-
+    </x-search-filter>
     <div class="books-grid">
-        @foreach($books as $book)
-            <div class="book-card">
-                <div class="book-top">
-                    <img 
-                        src="{{ $book->cover ? asset('storage/' . $book->cover) : 'https://via.placeholder.com/60x80?text=No+Cover' }}" 
-                        class="book-cover"
-                        alt="{{ $book->title }}"
-                    >
-                    <div class="book-info">
-                        <h5>{{ $book->title }}</h5>
-                        <p>{{ $book->writer }}</p>
-                        <p class="book-stock">Stock: {{ $book->stock }}</p>
-                    </div>
+        @forelse($books as $book)
+            @php $stock = $book->stock ?? 0; @endphp
+            
+            <a href="{{ route('student.books.show', $book->id) }}" class="book-rec-card">
+                <div class="badge-category">{{ $book->category->name ?? 'Umum' }}</div>
+
+                <div class="badge-stock {{ $stock <= 3 ? ($stock == 0 ? 'stock-empty' : 'stock-low') : 'stock-ok' }}">
+                    {{ $stock == 0 ? 'Habis' : ($stock <= 3 ? "Sisa $stock" : 'Tersedia') }}
                 </div>
 
-                <div class="book-actions">
-                    @if($book->stock > 0)
-                        <form action="{{ route('student.transactions.borrow') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="book_id" value="{{ $book->id }}">
-                            <button type="submit" class="btn-borrow">Pinjam Buku</button>
-                        </form>
+                <div class="book-cover-wrap">
+                    @if($book->cover)
+                        <img src="{{ asset('storage/' . $book->cover) }}" alt="{{ $book->title }}" loading="lazy">
                     @else
-                        <span style="color:#f87171; font-size:12px;">Stok Habis</span>
+                        <div class="book-cover-fallback">
+                            <i class="bi bi-book-half"></i>
+                            <span>{{ $book->title }}</span>
+                        </div>
                     @endif
                 </div>
+
+                <div class="book-info">
+                    <div class="book-title">{{ $book->title }}</div>
+                    <div class="book-author">{{ $book->writer ?? $book->author ?? 'Anonim' }}</div>
+                </div>
+            </a>
+        @empty
+            <div class="empty-state-container">
+                <x-empty-state 
+                    :as-tr="false" 
+                    icon="bi-book" 
+                    message="Koleksi buku belum tersedia."
+                />
             </div>
-        @endforeach
+        @endforelse
+    </div>
+
+    <div class="mt-5 d-flex justify-content-center">
+        <x-paginate :paginator="$books" />
     </div>
 </div>
+
 @endsection
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('filterForm');
-    if (!form) return;
-
-    let timeout = null;
-
-    document.querySelectorAll('.auto-submit').forEach(element => {
-        if (element.tagName === 'INPUT' && element.type === 'text') {
-            element.addEventListener('input', function () { 
-                clearTimeout(timeout);
-                timeout = setTimeout(() => {
-                    form.submit();
-                }, 500);
-            });
-        }
-    });
-});
-</script>

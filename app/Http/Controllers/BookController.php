@@ -219,11 +219,22 @@ class BookController extends Controller
         return back()->with('success', $message);
     }
 
-    public function student (Request $request) 
+    public function student(Request $request) 
     {
-        $books = Book::published()->with('category')->latest()->filter($request->all(), ['title'])->paginate(12)->withQueryString();
+        $query = Book::published()->with('category');
+
+        if ($request->filled('stock_order')) {
+            $direction = $request->stock_order === 'highest' ? 'desc' : 'asc';
+            $query->orderBy('stock', $direction);
+        } else {
+            $query->latest();
+        }
+        
+        $books = $query->filter($request->all(), ['title', 'writer'])->paginate(10)->withQueryString();
+
         $categories = Category::withCount('books')->get();
-        return view('student.pages.books.index', compact('books'));
+
+        return view('student.pages.books.index', compact('books', 'categories'));
     }
 
     public function show(Book $book)
