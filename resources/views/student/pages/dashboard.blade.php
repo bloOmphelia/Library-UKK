@@ -57,7 +57,14 @@
                         </div>
 
                         <div class="book-cover-wrap">
-                            <img src="{{ $book->cover ? asset('storage/' . $book->cover) : 'https://via.placeholder.com/300x450?text=No+Cover' }}" alt="{{ $book->title }}">
+                            @if($book->cover)
+                                <img src="{{ asset('storage/' . $book->cover) }}" alt="{{ $book->title }}" loading="lazy">
+                            @else
+                                <div class="book-cover-fallback">
+                                    <i class="bi bi-book-half"></i>
+                                    <span>{{ Str::limit($book->title, 25) }}</span>
+                                </div>
+                            @endif
                         </div>
 
                         <div class="book-info">
