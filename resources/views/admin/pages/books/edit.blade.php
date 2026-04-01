@@ -58,14 +58,14 @@
 
                             {{-- Title --}}
                             <div class="col-md-8 mb-4">
-                                <label class="form-label">Judul Buku <span class="text-danger">*</span></label>
+                                <label class="form-label">Judul Buku</label>
                                 <input type="text" name="title" class="form-control" @error('title') is-invalid @enderror value="{{ old('title', $books->title) }}" >
                                 @error('title') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
 
                             {{-- Category --}}
                             <div class="col-md-4 mb-4">
-                                <label class="form-label">Kategori <span class="text-danger">*</span></label>
+                                <label class="form-label">Kategori</label>
                                 <select name="category_id" class="form-select @error('category_id') is-invalid @enderror" >
                                     @foreach($categories as $cat)
                                         <option value="{{ $cat->id }}" {{ $books->category_id == $cat->id ? 'selected' : '' }}>
@@ -78,7 +78,7 @@
 
                             {{-- Writer --}}
                             <div class="col-md-6 mb-4">
-                                <label class="form-label">Penulis <span class="text-danger">*</span></label>
+                                <label class="form-label">Penulis</label>
                                 <input type="text" name="writer" class="form-control @error('writer') is-invalid @enderror" value="{{ old('writer', $books->writer) }}" >
                                 @error('writer') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
@@ -92,26 +92,26 @@
 
                             {{-- Year, Stock, Language --}}
                             <div class="col-md-4 mb-4">
-                                <label class="form-label">Tahun Terbit <span class="text-danger">*</span></label>
+                                <label class="form-label">Tahun Terbit</label>
                                 <input type="number" name="year" class="form-control @error('year') is-invalid @enderror" value="{{ old('year', $books->year) }}" >
                                 @error('year') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
 
                             <div class="col-md-4 mb-4">
-                                <label class="form-label">Stok <span class="text-danger">*</span></label>
+                                <label class="form-label">Stok</label>
                                 <input type="number" name="stock" class="form-control @error('stock') is-invalid @enderror" value="{{ old('stock', $books->stock) }}" min="0" >
                                 @error('stock') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
 
                             <div class="col-md-4 mb-4">
-                                <label class="form-label">Bahasa <span class="text-danger">*</span></label>
+                                <label class="form-label">Bahasa</label>
                                 <input type="text" name="language" class="form-control @error('language') is-invalid @enderror" value="{{ old('language', $books->language) }}" >
                                 @error('language') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
 
                             {{-- Deskripsi --}}
                             <div class="col-12 mb-4">
-                                <label class="form-label">Deskripsi Buku <span class="text-danger">*</span></label>
+                                <label class="form-label">Deskripsi Buku</label>
                                 <textarea name="description" rows="4" class="form-control @error('description') is-invalid @enderror" placeholder="Masukkan ringkasan buku..." >{{ old('description', $books->description) }}</textarea>
                                 @error('description') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>

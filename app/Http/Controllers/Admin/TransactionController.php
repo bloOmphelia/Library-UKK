@@ -157,30 +157,38 @@ class TransactionController extends Controller
 
     public function update(Request $request, $id)
     {
-        $transactions = Transaction::findOrFail($id);
-
-        if ($transactions->status !== 'borrowed') {
-            return back()->with('error', 'Hanya transaksi aktif yang dapat diperbarui.');
-        }
+        $transaction = Transaction::with('book')->findOrFail($id);
 
         $request->validate([
             'borrowed_at' => 'required|date',
             'due_at'      => 'required|date|after_or_equal:borrowed_at',
+            'status'      => 'required|in:borrowed,returned,late',
         ], [
             'required' => ':attribute tidak boleh kosong.',
             'date'     => ':attribute harus tanggal valid.',
             'after_or_equal' => ':attribute harus sama atau setelah tanggal pinjam.',
+            'in'       => 'Status tidak valid.'
         ], [
             'borrowed_at' => 'Tanggal pinjam',
             'due_at'      => 'Tanggal tenggat',
+            'status'      => 'Status Transaksi'
         ]);
 
-        $transactions->update([
+        if ($transaction->status !== 'returned' && $request->status === 'returned') {
+            $transaction->book->increment('stock');
+
+            $message = "Buku '{$transaction->book->title}' telah ditarik oleh admin untuk keperluan tertentu. Silakan hubungi admin untuk informasi lebih lanjut.";
+            $transaction->user->notify(new TransactionNotification($message, 'success', 'bi-check-all'));
+        }
+
+        $transaction->update([
             'borrowed_at' => $request->borrowed_at,
             'due_at'      => $request->due_at,
+            'status'      => $request->status,
+            'returned_at' => $request->status === 'returned' ? now() : $transaction->returned_at,
         ]);
 
-        return redirect()->route('admin.transactions')->with('success', 'Data peminjaman diperbarui.');
+        return redirect()->route('admin.transactions')->with('success', 'Data peminjaman berhasil diperbarui.');
     }
 
     public function destroy($id)

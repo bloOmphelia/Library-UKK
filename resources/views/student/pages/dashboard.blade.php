@@ -13,10 +13,8 @@
     <x-breadcrumb 
         title="Selamat Datang di SmartLib"
         :description="'Halo, ' . $user->name . ' — Mau baca apa kita hari ini?'"
-        category="Dashboard"
-        bgColor="var(--primary-bg)" 
-        :image="asset('assets/users/admin/dist/images/backgrounds/track-bg.png')"
-        imgWidth="180px"
+        category="Manajemen"
+        bgColor="var(--hero-bg)" 
     />
 
     <div class="stats-grid">

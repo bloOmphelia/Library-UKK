@@ -26,7 +26,7 @@
                         <div class="row">
                             {{-- Field NIS --}}
                             <div class="col-md-6 mb-4">
-                                <label class="form-label">NIS (Nomor Induk Siswa)</label>
+                                <label class="form-label">NIS (Nomor Induk Siswa) <span class="text-danger">*</span></label>
                                 <input type="text" name="nis"
                                     class="form-control @error('nis') is-invalid @enderror"
                                     value="{{ old('nis') }}"
@@ -35,7 +35,7 @@
                             </div>
 
                             <div class="col-md-6 mb-4">
-                                <label class="form-label">Nama Lengkap</label>
+                                <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
                                 <input type="text" name="name"
                                     class="form-control @error('name') is-invalid @enderror"
                                     value="{{ old('name') }}"
@@ -44,7 +44,7 @@
                             </div>
 
                             <div class="col-md-6 mb-4">
-                                <label class="form-label">Alamat Email</label>
+                                <label class="form-label">Alamat Email <span class="text-danger">*</span></label>
                                 <input type="email" name="email"
                                     class="form-control @error('email') is-invalid @enderror"
                                     value="{{ old('email') }}"
@@ -53,7 +53,7 @@
                             </div>
 
                             <div class="col-md-6 mb-4">
-                                <label class="form-label">No. Telepon</label>
+                                <label class="form-label">No. Telepon <span class="text-danger">*</span></label>
                                 <input type="text" name="phone_number"
                                     class="form-control @error('phone_number') is-invalid @enderror"
                                     value="{{ old('phone_number') }}"
@@ -62,7 +62,7 @@
                             </div>
 
                             <div class="col-md-6 mb-4">
-                                <label class="form-label">Kata Sandi</label>
+                                <label class="form-label">Kata Sandi<span class="text-danger">*</span></label>
                                 <input type="password" name="password"
                                     class="form-control @error('password') is-invalid @enderror"
                                     placeholder="Minimal 8 karakter" >
@@ -70,14 +70,14 @@
                             </div>
 
                             <div class="col-md-6 mb-4">
-                                <label class="form-label">Konfirmasi Sandi</label>
+                                <label class="form-label">Konfirmasi Sandi <span class="text-danger">*</span></label>
                                 <input type="password" name="password_confirmation"
                                     class="form-control"
                                     placeholder="Ulangi kata sandi" >
                             </div>
 
                             <div class="col-md-6 mb-4">
-                                <label class="form-label">Kelas</label>
+                                <label class="form-label">Kelas <span class="text-danger">*</span></label>
                                 <input type="text" name="class"
                                     class="form-control @error('class') is-invalid @enderror"
                                     value="{{ old('class') }}"
@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="col-md-6 mb-4">
-                                <label class="form-label">Jenis Kelamin</label>
+                                <label class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>
                                 <select name="gender" class="form-select @error('gender') is-invalid @enderror">
                                     <option value="">-- Pilih Jenis Kelamin --</option>
                                     <option value="Laki-laki" {{ old('gender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
@@ -96,7 +96,7 @@
                             </div>
 
                             <div class="col-12 mb-4">
-                                <label class="form-label">Alamat Lengkap</label>
+                                <label class="form-label">Alamat Lengkap <span class="text-danger">*</span></label>
                                 <textarea name="address" rows="3"
                                     class="form-control @error('address') is-invalid @enderror"
                                     placeholder="Masukkan alamat tinggal saat ini">{{ old('address') }}</textarea>

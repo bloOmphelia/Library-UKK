@@ -20,9 +20,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 clearTimeout(timeout);
                 timeout = setTimeout(() => {
                     form.submit();
-                }, 500);
+                }, 700);
             });
         }
+    });
+});
+
+document.querySelectorAll('.btn-clear-search').forEach(btn => {
+    btn.addEventListener('mouseenter', () => btn.style.opacity = '0.8');
+    btn.addEventListener('mouseleave', () => btn.style.opacity = '0.4');
+    
+    btn.addEventListener('click', () => {
+        const form = btn.closest('form');
+        const input = form.querySelector('.search-input');
+        input.value = '';
+        form.submit();
     });
 });
 </script>

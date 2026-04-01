@@ -14,26 +14,12 @@
     bgColor="#f8f9fa"
 />
 
-{{-- Toolbar --}}
 <div class="d-flex align-items-center gap-3 mb-4 w-100 flex-wrap toolbar-wrapper">
 
-    {{-- Search --}}
-    <div style="max-width: 500px; width: 100%;">
-        <form action="{{ url()->current() }}" method="GET" class="m-0">
-            <div class="position-relative">
-                <i class="bi bi-search position-absolute top-50 translate-middle-y ms-3 text-muted"></i>
-                <input type="text" name="search" value="{{ request('search') }}" 
-                    class="form-control" placeholder="Cari transaksi..." 
-                    style="height: 45px; padding-left: 45px; border-radius: 12px; border: 1px solid #e5e7eb; font-size: 14px;">
-            </div>
-        </form>
-    </div>
-
-    {{-- Filter Status --}}
-    <div style="min-width: 180px;">
+    <x-search-filter :action="url()->current()" placeholder="Cari transaksi..." :inline="true">
         <form action="{{ url()->current() }}" method="GET" class="m-0">
             <select name="status" class="form-select" onchange="this.form.submit()"
-                style="height: 45px; border-radius: 12px; border: 1px solid #e5e7eb; font-size: 14px; cursor: pointer;">
+                style="height: 45px; border-radius: 12px; border: 1px solid #e5e7eb; font-size: 14px; cursor: pointer; min-width: 180px;">
                 <option value="">Semua Status</option>
                 <option value="pending"  {{ request('status') == 'pending'   ? 'selected' : '' }}>Menunggu</option>
                 <option value="borrowed" {{ request('status') == 'borrowed'  ? 'selected' : '' }}>Dipinjam</option>
@@ -41,12 +27,11 @@
                 <option value="late"     {{ request('status') == 'late'      ? 'selected' : '' }}>Terlambat</option>
             </select>
         </form>
-    </div>
+    </x-search-filter>
 
-    {{-- Tombol Tambah --}}
     <a href="{{ route('admin.transactions.create') }}" 
-    class="btn btn-dark d-flex align-items-center justify-content-center gap-2 text-nowrap ms-auto toolbar-btn-add" 
-    style="height: 45px; padding: 0 20px; border-radius: 12px; font-size: 14px; font-weight: 700; background-color: #1a1a1a; border: none; flex-shrink: 0;">
+        class="btn btn-dark d-flex align-items-center justify-content-center gap-2 text-nowrap ms-auto toolbar-btn-add" 
+        style="height: 45px; padding: 0 20px; border-radius: 12px; font-size: 14px; font-weight: 700; background-color: #1a1a1a; border: none; flex-shrink: 0;">
         <i class="bi bi-plus-lg" style="font-size: 18px;"></i>
         Tambah Transaksi
     </a>

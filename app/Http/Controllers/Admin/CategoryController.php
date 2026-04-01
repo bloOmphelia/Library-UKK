@@ -23,13 +23,28 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name',
+            'name' => 'required|string|max:255',
         ], [
             'name.required' => 'Nama kategori wajib diisi.',
             'name.string'   => 'Nama kategori harus berupa teks.',
             'name.max'      => 'Nama kategori maksimal 255 karakter.',
-            'name.unique'   => 'Nama kategori ini sudah ada, gunakan nama lain.',
         ]);
+
+        $existingCategory = Category::withTrashed()
+            ->where('name', $request->name)
+            ->first();
+
+        if ($existingCategory) {
+            if (!$existingCategory->trashed()) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['name' => 'Nama kategori ini sudah ada dan aktif.']);
+            }
+
+            $existingCategory->restore();
+
+            return redirect()->back()->with('success', 'Kategori berhasil ditambahkan.');
+        }
 
         Category::create([
             'name' => $request->name,

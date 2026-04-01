@@ -15,7 +15,6 @@ class BookController extends Controller
     {
         $query = Book::with('category');
 
-        // Gunakan urutan stok jika diminta, jika tidak tampilkan yang terbaru
         if ($request->filled('stock_order')) {
             $direction = $request->stock_order === 'highest' ? 'desc' : 'asc';
             $query->orderBy('stock', $direction);
@@ -133,36 +132,35 @@ class BookController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
-            'title' => ['required', 'string', 'max:255', 
+            'cover'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'title'       => ['nullable', 'string', 'max:255', 
                 function ($attribute, $value, $fail) use ($request, $id) {
-                    $exists = Book::withTrashed()
-                        ->where('title', $value)
-                        ->where('writer', $request->writer)
-                        ->where('id', '!=', $id) 
-                        ->exists();
-                    if ($exists) {
-                        $fail('Buku dengan judul dan penulis ini sudah terdaftar.');
+                    if (!empty($value)) {
+                        $exists = Book::withTrashed()
+                            ->where('title', $value)
+                            ->where('writer', $request->writer ?? Book::find($id)->writer)
+                            ->where('id', '!=', $id) 
+                            ->exists();
+                        if ($exists) {
+                            $fail('Buku dengan judul dan penulis ini sudah terdaftar.');
+                        }
                     }
                 },
             ],
-            'writer' => 'required|string|max:255',
-            'publisher' => 'required|string|max:255',
-            'description' => 'required|string',
-            'stock' => 'required|integer|min:0',
-            'year' => 'required|integer|min:1000|max:' . (date('Y') + 1), // Validasi year di sini
-            'language' => 'required|string|max:100', 
-            'category_id' => 'required|exists:categories,id',
+            'writer'      => 'nullable|string|max:255',
+            'publisher'   => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'stock'       => 'nullable|integer|min:0',
+            'year'        => 'nullable|integer|min:1000|max:' . (date('Y') + 1),
+            'language'    => 'nullable|string|max:100', 
+            'category_id' => 'nullable|exists:categories,id',
         ], [
-            // PESAN CUSTOM (Ini yang akan muncul)
-            'required' => ':attribute tidak boleh kosong.',
             'image'    => 'Cover harus berupa gambar.',
-            'integer'  => ':attribute harus berupa angka tahun.', 
+            'integer'  => ':attribute harus berupa angka.', 
             'min'      => ':attribute minimal :min.',
             'max'      => ':attribute maksimal :max.', 
             'mimes'    => 'Format gambar tidak valid.',
         ], [
-            // NAMA ATRIBUT CUSTOM
             'title'       => 'Judul buku',
             'writer'      => 'Penulis',
             'publisher'   => 'Penerbit',
@@ -174,9 +172,12 @@ class BookController extends Controller
         ]);
 
         $books = Book::findOrFail($id);
-        
-        // Gunakan $request->only atau definisikan manual agar data konsisten
-        $data = $request->only(['title', 'writer', 'publisher', 'description', 'stock', 'year', 'language', 'category_id']);
+    
+        $data = array_filter($request->only([
+            'title', 'writer', 'publisher', 'description', 'stock', 'year', 'language', 'category_id'
+        ]), function($value) {
+            return $value !== null && $value !== '';
+        });
 
         if ($request->hasFile('cover')) {
             if ($books->cover && Storage::disk('public')->exists($books->cover)) {

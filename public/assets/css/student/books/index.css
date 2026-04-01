@@ -102,6 +102,17 @@
         text-overflow: ellipsis;
     }
 
+    .empty-state-container {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+        text-align: center;
+        width: 100%;
+    }
+
     /* Badges */
     .badge-category, .badge-stock {
         position: absolute;

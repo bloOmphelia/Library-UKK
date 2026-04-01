@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="col-md-6 mb-4">
-                                <label class="form-label">Batas Pengembalian</label>
+                                <label class="form-label">Tanggal Kembali</label>
                                 <input type="date" name="due_at" class="form-control @error('due_at') is-invalid @enderror" value="{{ old('due_at') }}" >
                                 @error('due_at') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
