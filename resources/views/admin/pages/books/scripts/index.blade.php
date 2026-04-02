@@ -5,7 +5,7 @@ function confirmStatus(id, currentStatus, activeLoans) {
     let icon  = "question";
 
     if (currentStatus === 'published') {
-        title = "Tarik buku ini ke Draft?";
+        title = "Tarik buku ini ke Arsip?";
         icon  = "warning";
         text  = activeLoans > 0
             ? `Hati-hati! Ada ${activeLoans} transaksi aktif untuk buku ini.`

@@ -97,7 +97,7 @@
                                 style="height:40px; border-radius:10px; font-weight:700; font-size:13px;"
                                 onclick="event.preventDefault(); event.stopPropagation(); confirmStatus('{{ $book->id }}', 'published', {{ $activeLoans }})">
                                 <i class="bi bi-archive-fill"></i>
-                                <span>Tarik ke Draft</span>
+                                <span>Arsip</span>
                             </button>
                         @else
                             {{-- Terbitkan --}}
