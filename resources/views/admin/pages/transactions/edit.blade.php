@@ -70,7 +70,7 @@
                                 @error('status') <small class="text-danger">{{ $message }}</small> @enderror
                                 <div class="mt-2" style="font-size: 13px; color: #6c757d;">
                                     <i class="bi bi-info-circle-fill me-1 text-primary"></i> 
-                                    Status <strong>'Dikembalikan'</strong> akan mengembalikan stok buku secara otomatis.
+                                    Status <strong>'Dikembalikan'</strong> & <strong>'Terlambat'</strong> akan mengembalikan stok buku secara otomatis.
                                 </div>
                             </div>
                         </div>

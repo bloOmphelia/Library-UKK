@@ -174,10 +174,13 @@ class TransactionController extends Controller
             'status'      => 'Status Transaksi'
         ]);
 
-        if ($transaction->status !== 'returned' && $request->status === 'returned') {
+        $finalStatuses = ['returned', 'late'];
+
+        if ($transaction->status === 'borrowed' && in_array($request->status, $finalStatuses)) {
             $transaction->book->increment('stock');
 
-            $message = "Buku '{$transaction->book->title}' telah ditarik oleh admin untuk keperluan tertentu. Silakan hubungi admin untuk informasi lebih lanjut.";
+            $statusText = $request->status === 'late' ? 'Terlambat' : 'Tepat Waktu';
+            $message = "Transaksi buku '{$transaction->book->title}' telah ditutup dengan status: {$statusText}.";
             $transaction->user->notify(new TransactionNotification($message, 'success', 'bi-check-all'));
         }
 
@@ -185,7 +188,7 @@ class TransactionController extends Controller
             'borrowed_at' => $request->borrowed_at,
             'due_at'      => $request->due_at,
             'status'      => $request->status,
-            'returned_at' => $request->status === 'returned' ? now() : $transaction->returned_at,
+            'returned_at' => in_array($request->status, $finalStatuses) ? now() : $transaction->returned_at,
         ]);
 
         return redirect()->route('admin.transactions')->with('success', 'Data peminjaman berhasil diperbarui.');

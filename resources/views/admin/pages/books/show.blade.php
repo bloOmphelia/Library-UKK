@@ -14,7 +14,6 @@
         <a href="{{ route('admin.books') }}"
            style="color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
             <i class="bi bi-arrow-left fs-4"></i>
-            <span>Kembali</span>
         </a>
     </nav>
 
