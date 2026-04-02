@@ -38,7 +38,7 @@ class UpdateUserRequest extends FormRequest
                 'email',
                 Rule::unique('users', 'email')->ignore($userId)->whereNull('deleted_at'),
             ],
-            'password'     => 'nullable|string|min:8|confirmed',
+            'password'     => 'nullable|string|min:8',
             'phone_number' => 'nullable|string|max:13',
             'class'        => 'nullable|string|max:255',
             'address'      => 'nullable|string|max:255',
@@ -58,7 +58,6 @@ class UpdateUserRequest extends FormRequest
             'email.email' => 'Format email tidak valid.',
             'email.unique' => 'Email sudah digunakan.',
             'password.min' => 'Password minimal 8 karakter.',
-            'password.confirmed' => 'Konfirmasi password tidak cocok.',
             'phone_number.max' => 'Nomor telepon maksimal 13 karakter.',
         ];
     }
